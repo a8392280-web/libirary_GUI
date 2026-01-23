@@ -1,0 +1,49 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>Icons/arrow.png</file>
+    <file>Icons/metascore.png</file>
+    <file>Icons/rotten tomatoes.png</file>
+    <file>Icons/tmdb.png</file>
+    <file>Icons/trailer.png</file>
+    <file>Icons/download.png</file>
+    <file>Icons/watch.png</file>
+    <file>Icons/eye 1.png</file>
+    <file>Icons/eye.png</file>
+    <file>Icons/file.png</file>
+    <file>Icons/chronometer.png</file>
+    <file>Icons/imdb.png</file>
+    <file>Icons/star.png</file>
+    <file>Icons/grid.png</file>
+    <file>Icons/list.png</file>
+    <file>Icons/search.png</file>
+    <file>Icons/dice.png</file>
+    <file>Icons/sort_by.png</file>
+    <file>Icons/more.png</file>
+    <file>Icons/dashboard 1.png</file>
+    <file>Icons/dashboard.png</file>
+    <file>Icons/exit 1.png</file>
+    <file>Icons/exit.png</file>
+    <file>Icons/book 1.png</file>
+    <file>Icons/book.png</file>
+    <file>Icons/boy.png</file>
+    <file>Icons/comic 1.png</file>
+    <file>Icons/comic.png</file>
+    <file>Icons/console 1.png</file>
+    <file>Icons/console.png</file>
+    <file>Icons/film 1.png</file>
+    <file>Icons/film.png</file>
+    <file>Icons/home 1.png</file>
+    <file>Icons/home.png</file>
+    <file>Icons/plus 1.png</file>
+    <file>Icons/plus 2.png</file>
+    <file>Icons/plus.png</file>
+    <file>Icons/setting 1.png</file>
+    <file>Icons/setting.png</file>
+    <file>Icons/user 1.png</file>
+    <file>Icons/user.png</file>
+    <file>Icons/watching 1.png</file>
+    <file>Icons/watching.png</file>
+  </qresource>
+  <qresource prefix="fonts"/>
+  <qresource prefix="images"/>
+</RCC>
