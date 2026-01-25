@@ -1,20 +1,21 @@
-import sys
-import asyncio
-from PySide6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QHBoxLayout, 
-                               QLabel, QLineEdit, QPushButton, QStackedWidget, QMessageBox, QFrame)
+from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, 
+                               QLabel, QLineEdit, QPushButton, QStackedWidget, QMessageBox)
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QFont, QPalette, QColor
-from qasync import QEventLoop, asyncSlot
+from PySide6.QtGui import QFont
 
-class ModernAuthUI(QWidget):
 
+class AuthView(QWidget):
+    """Pure UI component - no business logic"""
+    
+    # Signals for user actions
+    signin_requested = Signal(str, str, str)  # name, email, password
+    login_requested = Signal(str, str)  # email, password
     login_success = Signal()
-
-    def __init__(self, api_client):
+    
+    def __init__(self):
         super().__init__()
         self.setWindowTitle("Modern Auth UI")
         self.setFixedSize(450, 600)
-        self.api = api_client
         self.setup_ui()
 
     def setup_ui(self):
@@ -135,7 +136,7 @@ class ModernAuthUI(QWidget):
         
         # Sign in button
         self.signin_btn = QPushButton("Sign Up")
-        self.signin_btn.clicked.connect(self.handle_signin)
+        self.signin_btn.clicked.connect(self._on_signin_clicked)
         layout.addWidget(self.signin_btn)
         
         # Switch to login
@@ -200,7 +201,7 @@ class ModernAuthUI(QWidget):
         
         # Login button
         self.login_btn = QPushButton("Log In")
-        self.login_btn.clicked.connect(self.handle_login)
+        self.login_btn.clicked.connect(self._on_login_clicked)
         layout.addWidget(self.login_btn)
         
         # Switch to sign in
@@ -223,6 +224,35 @@ class ModernAuthUI(QWidget):
         widget.setLayout(layout)
         return widget
     
+    # UI-only methods - just emit signals or validate input
+    def _on_signin_clicked(self):
+        """Collect data and emit signal"""
+        name = self.name_input.text().strip()
+        email = self.signin_email_input.text().strip()
+        password = self.signin_password_input.text()
+        
+        # Basic validation
+        if not name or not email or not password:
+            self.show_error("Please fill in all fields")
+            return
+        
+        # Emit signal - let presenter handle the logic
+        self.signin_requested.emit(name, email, password)
+    
+    def _on_login_clicked(self):
+        """Collect data and emit signal"""
+        email = self.login_email_input.text().strip()
+        password = self.login_password_input.text()
+        
+        # Basic validation
+        if not email or not password:
+            self.show_error("Please fill in all fields")
+            return
+        
+        # Emit signal - let presenter handle the logic
+        self.login_requested.emit(email, password)
+    
+    # Public methods for presenter to control the view
     def set_ui_enabled(self, enabled: bool):
         """Enable/disable UI elements during async operations"""
         self.name_input.setEnabled(enabled)
@@ -240,64 +270,18 @@ class ModernAuthUI(QWidget):
             self.signin_btn.setText("Sign Up")
             self.login_btn.setText("Log In")
     
-    @asyncSlot()
-    async def handle_signin(self):
-        name = self.name_input.text().strip()
-        email = self.signin_email_input.text().strip()
-        password = self.signin_password_input.text()
-        
-        # Basic validation
-        if not name or not email or not password:
-            QMessageBox.warning(self, "Error", "Please fill in all fields")
-            return
-        
-        # Disable UI during request
-        self.set_ui_enabled(False)
-        
-        try:
-            print(f"Sign up - Name: {name}, Email: {email}")
-            success = await self.api.register(name, email, password)
-            
-            if success:
-                # Since register() calls login() internally, 
-                # we now have tokens! Just emit the success signal.
-                self.login_success.emit()
-            else:
-                QMessageBox.critical(self, "Error", "Could not create account. Email may already be registered.")
-        except Exception as e:
-            print(f"Registration error: {e}")
-            QMessageBox.critical(self, "Error", f"Registration failed: {str(e)}")
-        finally:
-            # Re-enable UI
-            self.set_ui_enabled(True)
-        
-    @asyncSlot()
-    async def handle_login(self):
-        email = self.login_email_input.text().strip()
-        password = self.login_password_input.text()
-        
-        # Basic validation
-        if not email or not password:
-            QMessageBox.warning(self, "Error", "Please fill in all fields")
-            return
-        
-        # Disable UI during request
-        self.set_ui_enabled(False)
-        
-        try:
-            print(f"Log in - Email: {email}")
-            success = await self.api.login(email, password)
-            
-            if success:
-                print("Login success!")
-                self.login_success.emit()
-            else:
-                # Show an error message in the UI
-                QMessageBox.warning(self, "Error", "Invalid username or password")
-        except Exception as e:
-            print(f"Login error: {e}")
-            QMessageBox.critical(self, "Error", f"Login failed: {str(e)}")
-        finally:
-            # Re-enable UI
-            self.set_ui_enabled(True)
-
+    def show_error(self, message: str):
+        """Display error message"""
+        QMessageBox.warning(self, "Error", message)
+    
+    def show_critical_error(self, message: str):
+        """Display critical error message"""
+        QMessageBox.critical(self, "Error", message)
+    
+    def clear_inputs(self):
+        """Clear all input fields"""
+        self.name_input.clear()
+        self.signin_email_input.clear()
+        self.signin_password_input.clear()
+        self.login_email_input.clear()
+        self.login_password_input.clear()

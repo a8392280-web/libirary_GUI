@@ -4,3 +4,5 @@ venv
 *.pys
 *.pyc
 *.ini
+assets/
+__pycache__/

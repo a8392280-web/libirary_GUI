@@ -1,155 +1,163 @@
 import asyncio
-from PySide6.QtWidgets import QDialog, QMessageBox
-from PySide6.QtCore import Qt, QTimer
-from resources.py_ui.search_ui import Ui_add_widget
-from resources.py_ui.search_card_ui import MediaCard
-from app.api.client import LibraryAPIClient
+from PySide6.QtCore import QObject, QTimer, Qt
+from PySide6.QtWidgets import QDialog , QMessageBox # Added for the detail view
+from qasync import asyncSlot
+from app.views.search_card_view import MediaCard
+from app.utils.image_loder import get_image_loader
+from app.views.show_view import ShowView
 
-class AddWidgetController(QDialog):
-    def __init__(self):
+class SearchPresenter(QObject):
+    def __init__(self, view, api_client):
         super().__init__()
-        # Setup UI
-        self.ui = Ui_add_widget()
-        self.ui.setupUi(self)
-        self.client = LibraryAPIClient()
+        self.view = view
+        self.api = api_client
+        self.image_loader = get_image_loader()
         
-        # Set alignment and spacing
-        self.ui.search_verticallayout.setAlignment(Qt.AlignTop)
-        self.ui.search_verticallayout.setSpacing(10)
-        
-        # Set media type to index -1 (placeholder showing)
-        self.ui.search_media_type.setCurrentIndex(-1)
-        
-        # Connect signals
-        self.ui.search_line.returnPressed.connect(self.handle_search)
-        self.ui.serach_button.clicked.connect(self.handle_search)
-        
-        # Connect source combo box
-        self.ui.source.currentIndexChanged.connect(self.on_source_changed)
-        
-        # Debounce timer for automatic search (DB mode)
+        # Debounce timer
         self.search_timer = QTimer(self)
         self.search_timer.setSingleShot(True)
-        self.search_timer.timeout.connect(self.handle_search)
-        self.ui.search_line.textChanged.connect(self.on_text_changed)
+        self.search_timer.timeout.connect(self.handle_debounced_search)
         
-        # Track current search task
         self._current_task = None
+        self._is_db_mode = True
         
-        # Initialize UI state
-        self.on_source_changed(self.ui.source.currentIndex())
-    
+        # Connections
+        self.view.search_requested.connect(self.handle_search)
+        self.view.source_changed.connect(self.on_source_changed)
+        self.view.text_changed.connect(self.on_text_changed)
+
     def on_source_changed(self, index):
-        """Handle source combo box changes"""
-        if index == 0:  # DB
-            # Hide search button
-            self.ui.serach_button.setVisible(False)
-            # Clear results when switching to DB
-            self.clear_results()
-        elif index == 1:  # API
-            # Show search button
-            self.ui.serach_button.setVisible(True)
-            # Clear results when switching to API
-            self.clear_results()
+        self._is_db_mode = (index == 0)
+        self.cancel_current_search()
     
     def on_text_changed(self, text):
-        """Handle text changes - only auto-search in DB mode"""
-        # Stop the timer if it's running
         self.search_timer.stop()
-        
-        # Only auto-search if source is DB (index 0)
-        if self.ui.source.currentIndex() != 0:
+        if not self._is_db_mode:
             return
         
-        if not self.ui.search_line.text().strip():
-            # Clear results when search box is empty
-            self.clear_results()
-            # Cancel any ongoing search
-            if self._current_task and not self._current_task.done():
-                self._current_task.cancel()
+        if not text.strip():
+            self.view.clear_results()
+            self.cancel_current_search()
             return
         
-        # Start debounce timer (500ms) for DB mode
         self.search_timer.start(500)
-    
-    def clear_results(self):
-        """Remove all widgets from the results layout"""
-        while self.ui.search_verticallayout.count():
-            item = self.ui.search_verticallayout.takeAt(0)
-            widget = item.widget()
-            if widget:
-                widget.deleteLater()
-    
-    def add_search_result(self, title, cover_url, description, released, item_id):
-        """Creates and adds a new card to the UI"""
-        card = MediaCard(title, cover_url, description, released, item_id)
-        self.ui.search_verticallayout.addWidget(card)
-    
-    def validate_media_type(self):
-        """Validate that a media type is selected"""
-        if self.ui.search_media_type.currentIndex() == -1:
-            QMessageBox.warning(
-                self,
-                "Media Type Required",
-                "Please select a media type before searching."
-            )
-            return False
-        return True
-    
-    def handle_search(self):
-        """Non-async slot that schedules the async search"""
-        # Validate media type first
-        if not self.validate_media_type():
+
+    @asyncSlot()
+    async def handle_debounced_search(self):
+        if not self.view.validate_media_type():
             return
         
-        # Cancel previous search if still running
-        if self._current_task and not self._current_task.done():
-            self._current_task.cancel()
+        query = self.view.get_search_text()
+        media_type = self.view.get_media_type()
+        await self._perform_search(query, media_type, "db")
+
+    @asyncSlot(str, str, str)
+    async def handle_search(self, query: str, media_type: str, source: str):
+        await self._perform_search(query, media_type, source)
+
+    async def _perform_search(self, query: str, media_type: str, source: str):
+        self.cancel_current_search()
+        self.view.set_enabled(False)
         
-        # Schedule the async search
-        self._current_task = asyncio.create_task(self._handle_search_async())
-    
-    async def _handle_search_async(self):
-        """Actual async search implementation"""
-        query = self.ui.search_line.text().strip()
-        media_type = self.ui.search_media_type.currentText()
-        source_index = self.ui.source.currentIndex()
-        
-        if not query:
-            return
+        self._current_task = asyncio.create_task(
+            self._search_async(query, media_type, source)
+        )
         
         try:
-            # Clear old results
-            self.clear_results()
-            
-            # Choose endpoint based on source
-            if source_index == 0:  # DB
-                print(f"Searching DB for '{query}' in {media_type}...")
-                response = await self.client.get(f"media/movies/search/?q={query}")
-            elif source_index == 1:  # API
-                print(f"Fetching from API for '{query}' in {media_type}...")
-                response = await self.client.get(f"media/movies/api-search/tmdb?title={query}")
-            else:
-                return
-            
-            # Handle response
-            if response and isinstance(response, list):
-                for result in response:
-                    # Check if task was cancelled
-                    if asyncio.current_task().cancelled():
-                        break
-                    
-                    self.add_search_result(
-                        title=result.get("title"),
-                        cover_url=result.get("cover_url"),
-                        description=result.get("description"),
-                        released=result.get("released"),
-                        item_id=result.get("id")
-                    )
-                    # Small delay to avoid blocking UI
-                    await asyncio.sleep(0.01)
-                    
+            await self._current_task
         except asyncio.CancelledError:
-            print("Search cancelled")
+            pass
+        finally:
+            self.view.set_enabled(True)
+            self._current_task = None
+
+    async def _search_async(self, query: str, media_type: str, source: str):
+        try:
+            self.view.clear_results()
+            
+            # API Routing
+            endpoint = f"media/movies/search/?q={query}" if source == "db" \
+                       else f"media/movies/api-search/tmdb?title={query}"
+            
+            response = await self.api.get(endpoint)
+            
+            if response and isinstance(response, list):
+                await self._display_results(response)
+            else:
+                print(f"No results for '{query}'")
+                
         except Exception as e:
             print(f"Search error: {e}")
+            self.view.show_error(f"Search failed: {str(e)}")
+
+    async def _display_results(self, results: list):
+        for result in results:
+            if asyncio.current_task().cancelled():
+                break
+            
+            card = MediaCard(
+                title=result.get("title", "Unknown"),
+                cover_url=result.get("cover_url", ""),
+                description=result.get("description", ""),
+                released=result.get("released", ""),
+                item_id=result.get("id")
+            )
+            
+            # Use a helper to avoid closure issues and handle clicks
+            card.clicked.connect(lambda i=result.get("id"): self.on_card_clicked(i))
+            
+            self.view.add_search_result(card)
+
+            # Async Image Loading
+            if result.get("cover_url") and hasattr(card, 'cover_label'):
+                self.image_loader.load_image(
+                    url=result.get("cover_url"),
+                    label=card.cover_label,
+                    width=150,
+                    height=225,
+                    placeholder="⏳"
+                )
+            
+            # Yield to event loop to keep UI smooth during large list rendering
+            await asyncio.sleep(0.01)
+
+    def on_card_clicked(self, item_id):
+        """Standard method to bridge Qt Signal to Async Task"""
+        if item_id:
+            asyncio.create_task(self._show_detail(item_id))
+            
+    async def _show_detail(self, item_id):
+        """Fetches data and opens the detail dialog"""
+        try:
+            # Fetch the detail data
+            detail_data = await self.api.get(f"media/movies/get-one-movie/{item_id}")
+            if not detail_data:
+                print("No detail data found")
+                return
+            print(f"Detail data: {detail_data}")
+            # Create the dialog
+            show_dialog = ShowView()
+            # Populate dialog with detail data
+            show_dialog.set_detail_data(detail_data)
+            
+
+            # Show dialog modally
+            result = show_dialog.exec()
+            
+            # Dialog is now closed, clean up if needed
+            show_dialog.deleteLater()
+            
+            return result
+        
+        except Exception as e:
+            print(f"Error loading detail: {e}")
+            # Optionally show error to user
+            QMessageBox.warning(None, "Error", f"Failed to load details: {str(e)}")
+
+    def cancel_current_search(self):
+        if self._current_task and not self._current_task.done():
+            self._current_task.cancel()
+
+    def cleanup(self):
+        self.cancel_current_search()
+        self.search_timer.stop()

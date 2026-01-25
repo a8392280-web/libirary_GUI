@@ -1,11 +1,11 @@
 # main_widget.py
-from PySide6.QtCore import Qt, QSettings, Signal
+from PySide6.QtCore import QSettings, Signal
 from PySide6.QtWidgets import QWidget, QMessageBox
-from PySide6.QtGui import QPixmap, QPainter, QPainterPath
+from app.Windows.search_controller import SearchPresenter
 from resources.py_ui.main_ui import Ui_main_widget
 from app.utils.refresh_token_strore import delete_refresh_token
 from qasync import asyncSlot
-from app.Windows.search_controller import AddWidgetController
+from app.views.search_view import SearchView
 
 class Widget(QWidget):
     logout_requested = Signal()
@@ -16,6 +16,8 @@ class Widget(QWidget):
         self.ui.setupUi(self)
         self.setWindowTitle("My Library")
         self.api = api_client
+        self.search_dialog = None
+        self.search_presenter = None
         self.settings = QSettings("MyCompany", "MyApp")
         self._setup_side_buttons()
     
@@ -35,7 +37,7 @@ class Widget(QWidget):
             btn.setShortcut(shortcut)
         
         # Add buttons
-        self.ui.movies_add_botton.clicked.connect(self.open_add_movie_window)
+        self.ui.movies_add_botton.clicked.connect(self.show_search_dialog)
         self.ui.movies_add_botton.setShortcut("+")
         
         # Logout button
@@ -62,9 +64,23 @@ class Widget(QWidget):
     def show_setting(self): 
         self.ui.stacked_body_Widget.setCurrentIndex(6)
     
-    def open_add_movie_window(self):
-        win = AddWidgetController()
-        win.exec()
+    def show_search_dialog(self):
+            """Open the search dialog"""
+            # Create view
+            self.search_dialog = SearchView()
+            
+            # Create presenter
+            self.search_presenter = SearchPresenter(self.search_dialog, self.api)
+            
+            # Show dialog
+            result = self.search_dialog.exec()
+            
+            # Clean up when dialog closes
+            if self.search_presenter:
+                self.search_presenter.cleanup()
+                self.search_presenter = None
+            
+            return result
     
     @asyncSlot()
     async def handle_logout(self):

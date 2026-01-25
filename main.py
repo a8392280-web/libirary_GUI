@@ -1,18 +1,19 @@
 import sys
 from PySide6 import QtWidgets
-from pathlib import Path
-import socket
-from app.Windows.main_window_controller import Widget
-from resources.py_ui.login_ui import ModernAuthUI
-from app.utils.refresh_token_strore import *
-from app.api.client import LibraryAPIClient  # Our new service
 import asyncio
 from qasync import QEventLoop, asyncSlot
+
+from app.Windows.main_window_controller import Widget
+from app.views.login_view import AuthView
+from app.Windows.login_controller import AuthPresenter
+from app.api.client import LibraryAPIClient
+
 
 class AppController:
     def __init__(self):
         self.api = LibraryAPIClient()
-        self.login_window = None
+        self.login_view = None
+        self.login_presenter = None
         self.main_window = None
     
     async def start(self):
@@ -27,11 +28,16 @@ class AppController:
     
     def show_login(self):
         """Show the login window"""
-        self.login_window = ModernAuthUI(self.api)
+        # Create view
+        self.login_view = AuthView()
         
-        # Connect the signal to the switch function
-        self.login_window.login_success.connect(self.show_main)
-        self.login_window.show()
+        # Create presenter and connect it to view and model
+        self.login_presenter = AuthPresenter(self.login_view, self.api)
+        
+        # Connect the success signal to the switch function
+        self.login_view.login_success.connect(self.show_main)
+        
+        self.login_view.show()
     
     def show_main(self):
         """Show the main window"""
@@ -43,9 +49,10 @@ class AppController:
         self.main_window.show()
         
         # Close the login window if it exists
-        if self.login_window:
-            self.login_window.close()
-            self.login_window = None
+        if self.login_view:
+            self.login_view.close()
+            self.login_view = None
+            self.login_presenter = None  # Clean up presenter
     
     @asyncSlot()
     async def back_to_login(self):
