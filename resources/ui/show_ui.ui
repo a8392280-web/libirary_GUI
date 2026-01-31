@@ -306,7 +306,7 @@ QDialog QLabel {
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>0</y>
+                <y>-82</y>
                 <width>885</width>
                 <height>1004</height>
                </rect>
@@ -794,12 +794,30 @@ border-radius: 6px;</string>
                    </item>
                    <item>
                     <widget class="QWidget" name="widget_2" native="true">
+                     <property name="styleSheet">
+                      <string notr="true">QWidget {
+
+        border: 1px;
+        border-radius: 8px;
+    }
+    QWidget:hover {
+        background-color: #2d2d2d;
+        border: 1px solid #4a4a4a;
+    }
+    QLabel {
+        border: none;
+        background-color: transparent;
+    }</string>
+                     </property>
                      <layout class="QVBoxLayout" name="verticalLayout_8">
                       <property name="spacing">
                        <number>4</number>
                       </property>
                       <item>
                        <widget class="QLabel" name="user_rating_icon_lable">
+                        <property name="styleSheet">
+                         <string notr="true">border:none</string>
+                        </property>
                         <property name="text">
                          <string/>
                         </property>
@@ -813,6 +831,9 @@ border-radius: 6px;</string>
                       </item>
                       <item>
                        <widget class="QLabel" name="user_rating">
+                        <property name="styleSheet">
+                         <string notr="true">border:none</string>
+                        </property>
                         <property name="text">
                          <string>User rate</string>
                         </property>

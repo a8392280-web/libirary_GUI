@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'show_uiyUWUbn.ui'
+## Form generated from reading UI file 'show_uieGtHcZ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.2
 ##
@@ -242,7 +242,7 @@ class Ui_show(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.info_scrollarea = QWidget()
         self.info_scrollarea.setObjectName(u"info_scrollarea")
-        self.info_scrollarea.setGeometry(QRect(0, 0, 885, 1004))
+        self.info_scrollarea.setGeometry(QRect(0, -82, 885, 1004))
         self.gridLayout_3 = QGridLayout(self.info_scrollarea)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.widget_7 = QWidget(self.info_scrollarea)
@@ -519,26 +519,41 @@ class Ui_show(object):
 
         self.horizontalLayout_2.addWidget(self.widget)
 
-        self.widget_2 = QWidget(self.info_scrollarea)
-        self.widget_2.setObjectName(u"widget_2")
-        self.verticalLayout_8 = QVBoxLayout(self.widget_2)
+        self.user_rating_widget = QWidget(self.info_scrollarea)
+        self.user_rating_widget.setObjectName(u"user_rating_widget")
+        self.user_rating_widget.setStyleSheet(u"QWidget {\n"
+"\n"
+"        border: 1px;\n"
+"        border-radius: 8px;\n"
+"    }\n"
+"    QWidget:hover {\n"
+"        background-color: #2d2d2d;\n"
+"        border: 1px solid #4a4a4a;\n"
+"    }\n"
+"    QLabel {\n"
+"        border: none;\n"
+"        background-color: transparent;\n"
+"    }")
+        self.verticalLayout_8 = QVBoxLayout(self.user_rating_widget)
         self.verticalLayout_8.setSpacing(4)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.user_rating_icon_lable = QLabel(self.widget_2)
+        self.user_rating_icon_lable = QLabel(self.user_rating_widget)
         self.user_rating_icon_lable.setObjectName(u"user_rating_icon_lable")
+        self.user_rating_icon_lable.setStyleSheet(u"border:none")
         self.user_rating_icon_lable.setPixmap(QPixmap(u":/icons/Icons/star.png"))
         self.user_rating_icon_lable.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_8.addWidget(self.user_rating_icon_lable)
 
-        self.user_rating = QLabel(self.widget_2)
+        self.user_rating = QLabel(self.user_rating_widget)
         self.user_rating.setObjectName(u"user_rating")
+        self.user_rating.setStyleSheet(u"border:none")
         self.user_rating.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_8.addWidget(self.user_rating)
 
 
-        self.horizontalLayout_2.addWidget(self.widget_2)
+        self.horizontalLayout_2.addWidget(self.user_rating_widget)
 
         self.widget_5 = QWidget(self.info_scrollarea)
         self.widget_5.setObjectName(u"widget_5")

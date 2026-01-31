@@ -626,6 +626,11 @@ QListWidget{
 	border:none;
 }
 
+QListView{
+	background-color: #182126;
+	border:none;
+}
+
 /* Navigation Buttons */
 QPushButton {
     background-color: transparent;
@@ -1212,7 +1217,7 @@ Line {
                    </layout>
                   </item>
                   <item>
-                   <widget class="QListWidget" name="movies_list_1"/>
+                   <widget class="QListView" name="movies_list_1"/>
                   </item>
                  </layout>
                 </item>

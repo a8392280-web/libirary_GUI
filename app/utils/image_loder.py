@@ -230,3 +230,34 @@ def link_to_image(path: str, label, x: int, y: int):
     """
     loader = get_image_loader()
     loader.load_image(path, label, x, y)
+
+
+
+def get_pixmap(url: str) -> QPixmap | None:
+    """
+    Delegate-safe function.
+    Returns cached QPixmap or None.
+    NEVER downloads.
+    NEVER blocks.
+    """
+
+    if not url:
+        return None
+
+    loader = get_image_loader()
+    cache_key = loader._get_cache_key(url)
+    cache_path = loader._get_cache_path(url)
+
+    # 1️⃣ Memory cache (FASTEST)
+    if cache_key in loader.memory_cache:
+        return loader.memory_cache[cache_key]
+
+    # 2️⃣ Disk cache (OK)
+    if cache_path.exists():
+        pixmap = QPixmap(str(cache_path))
+        if not pixmap.isNull():
+            loader.memory_cache[cache_key] = pixmap
+            return pixmap
+
+    # ❌ Not cached → delegate must NOT download
+    return None

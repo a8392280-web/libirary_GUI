@@ -1,3 +1,4 @@
+import asyncio
 import httpx
 import logging
 from app.utils.refresh_token_strore import save_refresh_token, get_refresh_token, delete_refresh_token
@@ -14,7 +15,7 @@ class LibraryAPIClient:
         self.client = httpx.AsyncClient(
             base_url=self.base_url,
             timeout=httpx.Timeout(10.0), # Prevent hanging forever
-            limits=httpx.Limits(max_keepalive_connections=20)
+            limits=httpx.Limits(max_keepalive_connections=20, keepalive_expiry= 30.0)
         )
 
         self.access_token = None
@@ -133,20 +134,35 @@ class LibraryAPIClient:
 
     # --- 3. THE SMART REQUEST WRAPPER ---
 
-    async def request(self, method, endpoint, **kwargs):
+    async def request(self, method, endpoint, retry_on_network_error=True, **kwargs):
+        """
+        The main method to call your API.
+        Handles:
+        1. Authorization headers
+        2. Network-level retries (ReadError/ConnectError)
+        3. Automatic 401 retries (Token Refresh)
+        """
         async with self._request_semaphore:
-            """
-            The main method to call your API.
-            Handles Authorization headers and automatic 401 retries.
-            """
-            # Ensure headers exist and add the Bearer token
+            # Prepare headers
             headers = kwargs.get("headers", {})
             if self.access_token:
                 headers["Authorization"] = f"Bearer {self.access_token}"
             kwargs["headers"] = headers
 
-            # 1. Attempt the request
-            response = await self.client.request(method, endpoint, **kwargs)
+            try:
+                # 1. Attempt the request
+                response = await self.client.request(method, endpoint, **kwargs)
+                
+            except (httpx.ReadError, httpx.ConnectError, httpx.RemoteProtocolError) as e:
+                # FIX: Catch the network "hiccup"
+                if retry_on_network_error:
+                    logger.warning(f"Network error ({type(e).__name__}). Retrying once...")
+                    await asyncio.sleep(0.5) # Short pause
+                    # Retry without the 'retry_on_network_error' flag to avoid infinite loops
+                    return await self.request(method, endpoint, retry_on_network_error=False, **kwargs)
+                else:
+                    logger.error(f"Network error persisted: {e}")
+                    raise # Re-raise if second attempt fails
 
             # 2. If 401, try to refresh once
             if response.status_code == 401:
@@ -154,16 +170,24 @@ class LibraryAPIClient:
                 stored_ref = get_refresh_token()
                 
                 if stored_ref and await self._refresh_session(stored_ref):
-                    # 3. If refresh worked, update header and retry
                     headers["Authorization"] = f"Bearer {self.access_token}"
                     kwargs["headers"] = headers
                     logger.info("Retrying original request with new token.")
-                    return await self.client.request(method, endpoint, **kwargs)
+                    # Re-run the request call after refresh
+                    return await self.request(method, endpoint, **kwargs)
                 else:
                     logger.error("Session dead. User must re-authenticate.")
-                    # Optional: You could emit a PySide signal here to show the login screen
-            
-            return response.json()
+                    # Tip: You might want to raise a custom exception here for your UI to catch
+                    return None 
+
+            # Return the JSON data
+            try:
+                return response.json()
+            except Exception:
+                # Handle cases where the server returns 500 or non-JSON error pages
+                logger.error(f"Failed to parse JSON. Status: {response.status_code}")
+                return None
+
 
     # Helper methods for easier calls
     async def get(self, endpoint, **kwargs):

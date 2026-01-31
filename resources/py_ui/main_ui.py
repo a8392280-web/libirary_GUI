@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_uiajqtBm.ui'
+## Form generated from reading UI file 'main_uixocpQI.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.2
 ##
@@ -16,10 +16,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
-    QHBoxLayout, QLabel, QLineEdit, QListWidget,
-    QListWidgetItem, QPushButton, QSizePolicy, QSpacerItem,
-    QStackedWidget, QTabWidget, QVBoxLayout, QWidget)
-
+    QHBoxLayout, QLabel, QLineEdit, QListView,
+    QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
+    QSpacerItem, QStackedWidget, QTabWidget, QVBoxLayout,
+    QWidget)
 from .. import resources_rc
 
 class Ui_main_widget(object):
@@ -50,6 +50,7 @@ class Ui_main_widget(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.side_widget.sizePolicy().hasHeightForWidth())
         self.side_widget.setSizePolicy(sizePolicy1)
+        self.side_widget.setMaximumSize(QSize(180, 16777215))
         self.side_widget.setStyleSheet(u"/* Sidebar Container */\n"
 "QWidget {\n"
 "    background-color:#2b3640;\n"
@@ -350,6 +351,11 @@ class Ui_main_widget(object):
 "	border:none;\n"
 "}\n"
 "\n"
+"QListView{\n"
+"	background-color: #182126;\n"
+"	border:none;\n"
+"}\n"
+"\n"
 "/* Navigation Buttons */\n"
 "QPushButton {\n"
 "    background-color: transparent;\n"
@@ -387,12 +393,12 @@ class Ui_main_widget(object):
 "\n"
 "/* Separator Line */\n"
 "Line {\n"
-"    background-color: rgb(70, 70, 70);\n"
+"    background-co"
+                        "lor: rgb(70, 70, 70);\n"
 "}\n"
 "\n"
 "QComboBox {\n"
-"    color: #e0e6f0; /* "
-                        "light text */\n"
+"    color: #e0e6f0; /* light text */\n"
 "    font-size: 14px;\n"
 "    background-color: rgba(255, 255, 255, 0.05); /* subtle transparent bg */\n"
 "    border: 1px solid rgba(255, 255, 255, 0.15);\n"
@@ -426,10 +432,10 @@ class Ui_main_widget(object):
 "\n"
 "/* Popup (the dropdown list) */\n"
 "QComboBox QAbstractItemView {\n"
-"    background-color: #2e3a4b; /* darker popup background */\n"
+"    background-color: #2e3a4b; /* dar"
+                        "ker popup background */\n"
 "    color: #e0e6f0;\n"
-"    border: 1px solid #5"
-                        "891ff;\n"
+"    border: 1px solid #5891ff;\n"
 "    selection-background-color: #3c4d63; /* selected item background */\n"
 "    selection-color: #ffffff;\n"
 "}\n"
@@ -664,7 +670,7 @@ class Ui_main_widget(object):
 
         self.verticalLayout_8.addLayout(self.horizontalLayout_5)
 
-        self.movies_list_1 = QListWidget(self.movies_watching)
+        self.movies_list_1 = QListView(self.movies_watching)
         self.movies_list_1.setObjectName(u"movies_list_1")
 
         self.verticalLayout_8.addWidget(self.movies_list_1)
@@ -1258,10 +1264,10 @@ class Ui_main_widget(object):
 
         self.verticalLayout_14.addLayout(self.horizontalLayout_12)
 
-        self.series_list_2 = QListWidget(self.series_want_to_watch)
-        self.series_list_2.setObjectName(u"series_list_2")
+        self.mseries_list_2 = QListWidget(self.series_want_to_watch)
+        self.mseries_list_2.setObjectName(u"mseries_list_2")
 
-        self.verticalLayout_14.addWidget(self.series_list_2)
+        self.verticalLayout_14.addWidget(self.mseries_list_2)
 
 
         self.gridLayout_16.addLayout(self.verticalLayout_14, 0, 0, 1, 1)

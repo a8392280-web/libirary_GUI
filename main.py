@@ -3,10 +3,11 @@ from PySide6 import QtWidgets
 import asyncio
 from qasync import QEventLoop, asyncSlot
 
-from app.Windows.main_window_controller import Widget
+from app.presenters.main_window_presenter import MainWidgetPresenter
 from app.views.login_view import AuthView
-from app.Windows.login_controller import AuthPresenter
+from app.presenters.login_presenter import AuthPresenter
 from app.api.client import LibraryAPIClient
+from app.views.main_window_view import MainWidgetView
 
 
 class AppController:
@@ -41,13 +42,13 @@ class AppController:
     
     def show_main(self):
         """Show the main window"""
-        # Create the main window
-        self.main_window = Widget(self.api)
-        
-        # Listen for the logout signal
-        self.main_window.logout_requested.connect(self.back_to_login)
-        self.main_window.show()
-        
+
+        self.main_window_view = MainWidgetView()
+        self.main_window_presenter = MainWidgetPresenter(self.main_window_view, self.api)
+
+        self.main_window_view.logout_requested.connect(self.back_to_login)
+        self.main_window_view.show()
+
         # Close the login window if it exists
         if self.login_view:
             self.login_view.close()
