@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>Icons/refresh.png</file>
+    <file>Icons/icons8-refresh.gif</file>
     <file>Icons/arrow.png</file>
     <file>Icons/metascore.png</file>
     <file>Icons/rotten tomatoes.png</file>

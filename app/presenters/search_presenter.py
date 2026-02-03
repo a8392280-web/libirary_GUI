@@ -1,12 +1,11 @@
 import asyncio
 from PySide6.QtCore import QObject, QTimer, Qt
-from PySide6.QtWidgets import QApplication,  QDialog , QMessageBox # Added for the detail view
+from PySide6.QtWidgets import QMessageBox
 from qasync import asyncSlot
 from app.views.search_card_view import MediaCard
 from app.utils.image_loder import get_image_loader
-from app.views.show_view import ShowView
-from app.presenters.show_presenter import ShowPresenter
-from PySide6.QtGui import QCursor
+from app.utils.dialog_helpers import DialogHelper 
+
 
 class SearchPresenter(QObject):
     def __init__(self, view, api_client):
@@ -120,57 +119,17 @@ class SearchPresenter(QObject):
                     placeholder="⏳"
                 )
             
-            # Yield to event loop to keep UI smooth during large list rendering
+            # Yield to event loop to keep UI smooth
             await asyncio.sleep(0.01)
 
     def on_card_clicked(self, item_id):
-        """Standard method to bridge Qt Signal to Async Task"""
+        """Bridge Qt Signal to Async Task"""
         if item_id:
             asyncio.create_task(self._show_detail(item_id))
-            
+    
     async def _show_detail(self, item_id):
-        """Fetches data and opens the detail dialog"""
-        # 1. Show 'Busy' cursor so the user knows something is happening
-        QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))       
-
-        try:
-            # 2. Fetch data (APIClient now handles retries internally)
-            detail_data = await self.api.get(f"users/me/media/movie/{item_id}")
-            
-            # Restore normal cursor as soon as the data arrives
-            QApplication.restoreOverrideCursor()
-
-            if detail_data is None:
-                # This happens if the APIClient returned None due to a refresh failure 
-                # or a persistent network error after retries.
-                QMessageBox.warning(None, "Connection Issue", "Could not retrieve data from server.")
-                return
-
-            # 3. Setup View and Presenter
-            show_dialog = ShowView()
-            show_presenter = ShowPresenter(show_dialog, self.api, "movie", detail_data)
-            
-            # Prevent Garbage Collection
-            show_dialog._presenter = show_presenter 
-
-            # 4. Run Dialog Asynchronously
-            result = await self._wait_for_dialog(show_dialog)
-            
-            # 5. Cleanup
-            await show_presenter.cleanup()
-            show_dialog.deleteLater()
-            
-            return result
-        
-        except Exception as e:
-            # Ensure cursor is restored even if an error occurs
-            QApplication.restoreOverrideCursor()
-
-        print(f"Error loading detail: {e}")
-        import traceback
-        traceback.print_exc()
-        
-        QMessageBox.critical(None, "Error", f"An unexpected error occurred: {str(e)}")
+        """✅ Now just delegates to the shared helper"""
+        await DialogHelper.show_detail_dialog(self.api, "movie", item_id)
 
     def cancel_current_search(self):
         if self._current_task and not self._current_task.done():
@@ -179,37 +138,3 @@ class SearchPresenter(QObject):
     def cleanup(self):
         self.cancel_current_search()
         self.search_timer.stop()
-
-
-
-    async def _wait_for_dialog(self, dialog):
-        """
-        Runs a dialog asynchronously with safety checks.
-        """
-        future = asyncio.get_running_loop().create_future()
-
-        # 1. Success path: Dialog finishes normally
-        def handle_finished(result):
-            if not future.done():
-                future.set_result(result)
-
-        # 2. Safety path: If the dialog is destroyed before finishing
-        def handle_destroyed():
-            if not future.done():
-                future.set_result(0) # 0 is QDialog.Rejected
-
-        dialog.finished.connect(handle_finished)
-        dialog.destroyed.connect(handle_destroyed)
-
-        # open() is excellent because it is window-modal but non-blocking
-        dialog.open() 
-        
-        try:
-            return await future
-        finally:
-            # Disconnect signals to ensure no memory leaks/zombie calls
-            try:
-                dialog.finished.disconnect(handle_finished)
-                dialog.destroyed.disconnect(handle_destroyed)
-            except Exception:
-                pass # Dialog might already be gone

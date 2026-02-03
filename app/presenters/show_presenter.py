@@ -24,7 +24,7 @@ class ShowPresenter:
         self.view.user_rating_changed.connect(self.on_user_rating_changed)
         
         # Set the categories
-        self.movies_catag = ["Planned", "In_progress", "Completed", "On-hold", "Dropped"]
+        self.movies_catag = ["Planned", "In_progress", "Completed", "On_hold", "Dropped"]
         
         if media_type == "movie":
             self.view.set_category_options(self.movies_catag)

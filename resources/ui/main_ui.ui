@@ -54,536 +54,6 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QWidget" name="side_widget" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>180</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">/* Sidebar Container */
-QWidget {
-    background-color:#2b3640;
-    border: none;
-}
-
-/* Navigation Buttons */
-QPushButton {
-    background-color: transparent;
-    color: white;
-    text-align: left;
-    border: none;
-    padding:6px 50px 5px 20px;
-    font-size: 14px;
-    font-weight: normal;
-    margin: 0px 0px;
-    border-radius: 6px;
-}
-
-QPushButton:hover {
-    background-color: rgb(65, 65, 65);
-}
-
-QPushButton:pressed {
-    background-color: rgb(75, 75, 75);
-}
-
-QPushButton:checked {
-    background-color: white;
-    color: black;
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-    font-weight: bold;
-}
-
-/* Section Headers/Labels */
-QLabel {
-    color: rgb(255, 255, 255);
-    font-size: 15px;
-    font-weight: bold;
-    text-transform: normal;
-    padding: 8px 0px ;
-    margin-top: 8px;
-}
-
-/* Icon Labels (if you're using QLabel for icons) */
-QLabel#iconLabel {
-    color: white;
-    font-size: 16px;
-    padding: 0px;
-    margin: 0px;
-}
-
-/* Separator Line */
-Line {
-    background-color: rgb(70, 70, 70);
-    border: none;
-    max-height: 1px;
-    min-height: 1px;
-	margin: 0px 12px;
-}
-</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="leftMargin">
-       <number>9</number>
-      </property>
-      <property name="topMargin">
-       <number>9</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>9</number>
-      </property>
-      <item>
-       <widget class="Line" name="line_3">
-        <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="account_layout">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="name_lable">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="photo_lable">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_4">
-        <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Media</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="show_movies">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LayoutDirection::LeftToRight</enum>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>   Movies</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/Icons/film 1.png</normaloff>
-          <normalon>:/icons/Icons/film.png</normalon>:/icons/Icons/film 1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>23</width>
-          <height>23</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="show_series">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>  TV Series</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/Icons/watching 1.png</normaloff>
-          <normalon>:/icons/Icons/watching.png</normalon>:/icons/Icons/watching 1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="show_games">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>  Games</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/Icons/console 1.png</normaloff>
-          <normalon>:/icons/Icons/console.png</normalon>:/icons/Icons/console 1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="show_books">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>  Books</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/Icons/book 1.png</normaloff>
-          <normalon>:/icons/Icons/book.png</normalon>:/icons/Icons/book 1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="show_comics">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>  Comics</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/Icons/comic 1.png</normaloff>
-          <normalon>:/icons/Icons/comic.png</normalon>:/icons/Icons/comic 1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_6">
-        <property name="orientation">
-         <enum>Qt::Orientation::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="Line" name="line_4">
-        <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_5">
-        <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Account</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="show_home">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>   Home</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/Icons/home 1.png</normaloff>
-          <normalon>:/icons/Icons/home.png</normalon>:/icons/Icons/home 1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="show_profile">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>   Profile</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/Icons/user 1.png</normaloff>
-          <normalon>:/icons/Icons/user.png</normalon>:/icons/Icons/user 1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="show_dashboard">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>  Dashboard</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/Icons/dashboard 1.png</normaloff>
-          <normalon>:/icons/Icons/dashboard.png</normalon>
-          <disabledoff>:/icons/Icons/dashboard.png</disabledoff>:/icons/Icons/dashboard 1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="show_setting">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>   Settings</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/Icons/setting 1.png</normaloff>
-          <normalon>:/icons/Icons/setting.png</normalon>:/icons/Icons/setting 1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Orientation::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>143</width>
-          <height>18</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Orientation::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Policy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="logout">
-        <property name="text">
-         <string>Logout</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/Icons/exit 1.png</normaloff>
-          <normalon>:/icons/Icons/exit.png</normalon>:/icons/Icons/exit 1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QWidget" name="main_body_widget" native="true">
      <property name="sizePolicy">
@@ -840,12 +310,15 @@ QTabBar::tab:hover {
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <property name="spacing">
-               <number>0</number>
+               <number>5</number>
               </property>
               <property name="leftMargin">
                <number>9</number>
               </property>
               <property name="topMargin">
+               <number>10</number>
+              </property>
+              <property name="rightMargin">
                <number>5</number>
               </property>
               <property name="bottomMargin">
@@ -917,13 +390,13 @@ QTabBar::tab:hover {
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>100</width>
+                  <width>0</width>
                   <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>50</width>
+                  <width>16777215</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -948,8 +421,8 @@ QTabBar::tab:hover {
                 </property>
                 <property name="iconSize">
                  <size>
-                  <width>30</width>
-                  <height>30</height>
+                  <width>32</width>
+                  <height>32</height>
                  </size>
                 </property>
                 <property name="shortcut">
@@ -957,6 +430,61 @@ QTabBar::tab:hover {
                 </property>
                 <property name="flat">
                  <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="movies_view">
+                <property name="toolTip">
+                 <string>Veiw</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../resources.qrc">
+                  <normaloff>:/icons/Icons/list.png</normaloff>
+                  <normalon>:/icons/Icons/grid.png</normalon>:/icons/Icons/list.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="movies_sort_by">
+                <property name="toolTip">
+                 <string>Sort list by</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="placeholderText">
+                 <string>Sort By</string>
+                </property>
+                <property name="duplicatesEnabled">
+                 <bool>false</bool>
+                </property>
+                <property name="frame">
+                 <bool>false</bool>
+                </property>
+                <property name="labelDrawingMode">
+                 <enum>QComboBox::LabelDrawingMode::UseStyle</enum>
                 </property>
                </widget>
               </item>
@@ -1146,71 +674,19 @@ QTabBar::tab:hover {
                      </spacer>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="movies_view_1">
-                      <property name="toolTip">
-                       <string>Veiw</string>
-                      </property>
+                     <widget class="QPushButton" name="refresh_button_1">
                       <property name="text">
                        <string/>
                       </property>
                       <property name="icon">
                        <iconset resource="../resources.qrc">
-                        <normaloff>:/icons/Icons/list.png</normaloff>
-                        <normalon>:/icons/Icons/grid.png</normalon>:/icons/Icons/list.png</iconset>
+                        <normaloff>:/icons/Icons/refresh.png</normaloff>:/icons/Icons/refresh.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
                         <width>32</width>
                         <height>32</height>
                        </size>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="Line" name="line">
-                      <property name="styleSheet">
-                       <string notr="true">/* Separator Line */
-Line {
-    background-color: rgb(70, 70, 70);
-}
-</string>
-                      </property>
-                      <property name="orientation">
-                       <enum>Qt::Orientation::Vertical</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QComboBox" name="movies_sort_by_1">
-                      <property name="toolTip">
-                       <string>Sort list by</string>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="editable">
-                       <bool>false</bool>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>32</width>
-                        <height>32</height>
-                       </size>
-                      </property>
-                      <property name="placeholderText">
-                       <string>Sort By</string>
-                      </property>
-                      <property name="duplicatesEnabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="frame">
-                       <bool>false</bool>
-                      </property>
-                      <property name="labelDrawingMode">
-                       <enum>QComboBox::LabelDrawingMode::UseStyle</enum>
                       </property>
                      </widget>
                     </item>
@@ -1354,62 +830,26 @@ Line {
                      </spacer>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="movies_view_2">
-                      <property name="toolTip">
-                       <string>Veiw</string>
-                      </property>
+                     <widget class="QPushButton" name="refresh_button_2">
                       <property name="text">
                        <string/>
                       </property>
                       <property name="icon">
                        <iconset resource="../resources.qrc">
-                        <normaloff>:/icons/Icons/list.png</normaloff>
-                        <normalon>:/icons/Icons/grid.png</normalon>:/icons/Icons/list.png</iconset>
+                        <normaloff>:/icons/Icons/refresh.png</normaloff>:/icons/Icons/refresh.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
                         <width>32</width>
                         <height>32</height>
                        </size>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="Line" name="line_6">
-                      <property name="orientation">
-                       <enum>Qt::Orientation::Vertical</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QComboBox" name="movies_sort_by_2">
-                      <property name="toolTip">
-                       <string>Sort list by</string>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>32</width>
-                        <height>32</height>
-                       </size>
-                      </property>
-                      <property name="placeholderText">
-                       <string>Sort By</string>
-                      </property>
-                      <property name="frame">
-                       <bool>false</bool>
-                      </property>
-                      <property name="labelDrawingMode">
-                       <enum>QComboBox::LabelDrawingMode::UseStyle</enum>
                       </property>
                      </widget>
                     </item>
                    </layout>
                   </item>
                   <item>
-                   <widget class="QListWidget" name="movies_list_2"/>
+                   <widget class="QListView" name="movies_list_2"/>
                   </item>
                  </layout>
                 </item>
@@ -1546,62 +986,26 @@ Line {
                      </spacer>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="movies_view_3">
-                      <property name="toolTip">
-                       <string>Veiw</string>
-                      </property>
+                     <widget class="QPushButton" name="refresh_button_3">
                       <property name="text">
                        <string/>
                       </property>
                       <property name="icon">
                        <iconset resource="../resources.qrc">
-                        <normaloff>:/icons/Icons/list.png</normaloff>
-                        <normalon>:/icons/Icons/grid.png</normalon>:/icons/Icons/list.png</iconset>
+                        <normaloff>:/icons/Icons/refresh.png</normaloff>:/icons/Icons/refresh.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
                         <width>32</width>
                         <height>32</height>
                        </size>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="Line" name="line_8">
-                      <property name="orientation">
-                       <enum>Qt::Orientation::Vertical</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QComboBox" name="movies_sort_by_3">
-                      <property name="toolTip">
-                       <string>Sort list by</string>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>32</width>
-                        <height>32</height>
-                       </size>
-                      </property>
-                      <property name="placeholderText">
-                       <string>Sort By</string>
-                      </property>
-                      <property name="frame">
-                       <bool>false</bool>
-                      </property>
-                      <property name="labelDrawingMode">
-                       <enum>QComboBox::LabelDrawingMode::UseStyle</enum>
                       </property>
                      </widget>
                     </item>
                    </layout>
                   </item>
                   <item>
-                   <widget class="QListWidget" name="movies_list_3"/>
+                   <widget class="QListView" name="movies_list_3"/>
                   </item>
                  </layout>
                 </item>
@@ -1735,65 +1139,26 @@ Line {
                      </spacer>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="movies_view_4">
-                      <property name="toolTip">
-                       <string>Veiw</string>
-                      </property>
-                      <property name="statusTip">
-                       <string>Veiw</string>
-                      </property>
+                     <widget class="QPushButton" name="refresh_button_4">
                       <property name="text">
                        <string/>
                       </property>
                       <property name="icon">
                        <iconset resource="../resources.qrc">
-                        <normaloff>:/icons/Icons/list.png</normaloff>
-                        <normalon>:/icons/Icons/grid.png</normalon>:/icons/Icons/list.png</iconset>
+                        <normaloff>:/icons/Icons/refresh.png</normaloff>:/icons/Icons/refresh.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
                         <width>32</width>
                         <height>32</height>
                        </size>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="Line" name="line_10">
-                      <property name="orientation">
-                       <enum>Qt::Orientation::Vertical</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QComboBox" name="movies_sort_by_4">
-                      <property name="toolTip">
-                       <string>Sort list by</string>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>32</width>
-                        <height>32</height>
-                       </size>
-                      </property>
-                      <property name="placeholderText">
-                       <string>Sort By</string>
-                      </property>
-                      <property name="frame">
-                       <bool>false</bool>
-                      </property>
-                      <property name="labelDrawingMode">
-                       <enum>QComboBox::LabelDrawingMode::UseStyle</enum>
                       </property>
                      </widget>
                     </item>
                    </layout>
                   </item>
                   <item>
-                   <widget class="QListWidget" name="movies_list_4"/>
+                   <widget class="QListView" name="movies_list_4"/>
                   </item>
                  </layout>
                 </item>
@@ -1930,71 +1295,26 @@ Line {
                      </spacer>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="movies_view_5">
-                      <property name="toolTip">
-                       <string>Veiw</string>
-                      </property>
-                      <property name="statusTip">
-                       <string/>
-                      </property>
+                     <widget class="QPushButton" name="refresh_button_5">
                       <property name="text">
                        <string/>
                       </property>
                       <property name="icon">
                        <iconset resource="../resources.qrc">
-                        <normaloff>:/icons/Icons/list.png</normaloff>
-                        <normalon>:/icons/Icons/grid.png</normalon>:/icons/Icons/list.png</iconset>
+                        <normaloff>:/icons/Icons/refresh.png</normaloff>:/icons/Icons/refresh.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
                         <width>32</width>
                         <height>32</height>
                        </size>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="Line" name="line_12">
-                      <property name="orientation">
-                       <enum>Qt::Orientation::Vertical</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QComboBox" name="movies_sort_by_5">
-                      <property name="toolTip">
-                       <string>Sort list by</string>
-                      </property>
-                      <property name="autoFillBackground">
-                       <bool>false</bool>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>32</width>
-                        <height>32</height>
-                       </size>
-                      </property>
-                      <property name="placeholderText">
-                       <string>Sort By</string>
-                      </property>
-                      <property name="frame">
-                       <bool>false</bool>
-                      </property>
-                      <property name="labelDrawingMode">
-                       <enum>QComboBox::LabelDrawingMode::UseStyle</enum>
                       </property>
                      </widget>
                     </item>
                    </layout>
                   </item>
                   <item>
-                   <widget class="QListWidget" name="movies_list_5"/>
+                   <widget class="QListView" name="movies_list_5"/>
                   </item>
                  </layout>
                 </item>
@@ -6841,6 +6161,536 @@ Line {
      </layout>
     </widget>
    </item>
+   <item row="0" column="0">
+    <widget class="QWidget" name="side_widget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>180</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">/* Sidebar Container */
+QWidget {
+    background-color:#2b3640;
+    border: none;
+}
+
+/* Navigation Buttons */
+QPushButton {
+    background-color: transparent;
+    color: white;
+    text-align: left;
+    border: none;
+    padding:6px 50px 5px 20px;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0px 0px;
+    border-radius: 6px;
+}
+
+QPushButton:hover {
+    background-color: rgb(65, 65, 65);
+}
+
+QPushButton:pressed {
+    background-color: rgb(75, 75, 75);
+}
+
+QPushButton:checked {
+    background-color: white;
+    color: black;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    font-weight: bold;
+}
+
+/* Section Headers/Labels */
+QLabel {
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: normal;
+    padding: 8px 0px ;
+    margin-top: 8px;
+}
+
+/* Icon Labels (if you're using QLabel for icons) */
+QLabel#iconLabel {
+    color: white;
+    font-size: 16px;
+    padding: 0px;
+    margin: 0px;
+}
+
+/* Separator Line */
+Line {
+    background-color: rgb(70, 70, 70);
+    border: none;
+    max-height: 1px;
+    min-height: 1px;
+	margin: 0px 12px;
+}
+</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>9</number>
+      </property>
+      <item>
+       <widget class="Line" name="line_3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="account_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="name_lable">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="photo_lable">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Media</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show_movies">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LayoutDirection::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>   Movies</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/Icons/film 1.png</normaloff>
+          <normalon>:/icons/Icons/film.png</normalon>:/icons/Icons/film 1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>23</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show_series">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>  TV Series</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/Icons/watching 1.png</normaloff>
+          <normalon>:/icons/Icons/watching.png</normalon>:/icons/Icons/watching 1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show_games">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>  Games</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/Icons/console 1.png</normaloff>
+          <normalon>:/icons/Icons/console.png</normalon>:/icons/Icons/console 1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show_books">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>  Books</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/Icons/book 1.png</normaloff>
+          <normalon>:/icons/Icons/book.png</normalon>:/icons/Icons/book 1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show_comics">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>  Comics</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/Icons/comic 1.png</normaloff>
+          <normalon>:/icons/Icons/comic.png</normalon>:/icons/Icons/comic 1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="Line" name="line_4">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Account</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show_home">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>   Home</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/Icons/home 1.png</normaloff>
+          <normalon>:/icons/Icons/home.png</normalon>:/icons/Icons/home 1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show_profile">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>   Profile</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/Icons/user 1.png</normaloff>
+          <normalon>:/icons/Icons/user.png</normalon>:/icons/Icons/user 1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show_dashboard">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>  Dashboard</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/Icons/dashboard 1.png</normaloff>
+          <normalon>:/icons/Icons/dashboard.png</normalon>
+          <disabledoff>:/icons/Icons/dashboard.png</disabledoff>:/icons/Icons/dashboard 1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show_setting">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>   Settings</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/Icons/setting 1.png</normaloff>
+          <normalon>:/icons/Icons/setting.png</normalon>:/icons/Icons/setting 1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>143</width>
+          <height>18</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="logout">
+        <property name="text">
+         <string>Logout</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/Icons/exit 1.png</normaloff>
+          <normalon>:/icons/Icons/exit.png</normalon>:/icons/Icons/exit 1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
@@ -6848,34 +6698,18 @@ Line {
  </resources>
  <connections>
   <connection>
-   <sender>movies_more</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>side_widget</receiver>
-   <slot>setHidden(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>231</x>
-     <y>40</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>171</x>
-     <y>131</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>movies_search_icon_5</sender>
    <signal>toggled(bool)</signal>
    <receiver>movies_search_5</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>288</x>
-     <y>139</y>
+     <x>402</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
-     <x>288</x>
-     <y>139</y>
+     <x>435</x>
+     <y>200</y>
     </hint>
    </hints>
   </connection>
@@ -6886,12 +6720,12 @@ Line {
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>211</x>
-     <y>140</y>
+     <x>402</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
-     <x>266</x>
-     <y>144</y>
+     <x>435</x>
+     <y>200</y>
     </hint>
    </hints>
   </connection>
@@ -6902,12 +6736,12 @@ Line {
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>288</x>
-     <y>139</y>
+     <x>402</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
-     <x>288</x>
-     <y>139</y>
+     <x>435</x>
+     <y>200</y>
     </hint>
    </hints>
   </connection>
@@ -6918,12 +6752,332 @@ Line {
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>288</x>
-     <y>139</y>
+     <x>402</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
-     <x>288</x>
-     <y>139</y>
+     <x>435</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>series_search_icon_1</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>series_search_1</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>series_search_icon_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>series_search_2</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>series_search_icon_3</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>series_search_3</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>series_search_icon_4</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>series_search_4</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>series_search_icon_5</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>series_search_5</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>games_search_icon_1</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>games_search_1</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>books_search_icon_1</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>books_search_1</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comics_search_icon_1</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comics_search_1</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>books_search_icon_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>books_search_2</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>books_search_icon_3</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>books_search_3</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>books_search_icon_4</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>books_search_4</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>books_search_icon_5</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>books_search_5</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comics_search_icon_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comics_search_2</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comics_search_icon_3</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comics_search_3</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comics_search_icon_4</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comics_search_4</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comics_search_icon_5</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comics_search_5</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>games_search_icon_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>games_search_2</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>games_search_icon_3</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>games_search_3</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>games_search_icon_4</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>games_search_4</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>games_search_icon_5</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>games_search_5</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>37</y>
     </hint>
    </hints>
   </connection>
@@ -6934,12 +7088,28 @@ Line {
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>288</x>
-     <y>139</y>
+     <x>402</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
-     <x>288</x>
-     <y>139</y>
+     <x>435</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comics_more</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>side_widget</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>389</x>
+     <y>5</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>170</x>
+     <y>13</y>
     </hint>
    </hints>
   </connection>
@@ -6950,27 +7120,11 @@ Line {
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>216</x>
-     <y>24</y>
+     <x>389</x>
+     <y>5</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
-     <y>13</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>gmaes_more</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>side_widget</receiver>
-   <slot>setHidden(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>207</x>
-     <y>13</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>166</x>
      <y>13</y>
     </hint>
    </hints>
@@ -6982,8 +7136,8 @@ Line {
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>210</x>
-     <y>21</y>
+     <x>389</x>
+     <y>5</y>
     </hint>
     <hint type="destinationlabel">
      <x>169</x>
@@ -6992,338 +7146,34 @@ Line {
    </hints>
   </connection>
   <connection>
-   <sender>comics_more</sender>
+   <sender>gmaes_more</sender>
    <signal>toggled(bool)</signal>
    <receiver>side_widget</receiver>
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>211</x>
-     <y>27</y>
+     <x>389</x>
+     <y>5</y>
     </hint>
     <hint type="destinationlabel">
-     <x>170</x>
+     <x>166</x>
      <y>13</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>series_search_icon_1</sender>
+   <sender>movies_more</sender>
    <signal>toggled(bool)</signal>
-   <receiver>series_search_1</receiver>
-   <slot>setVisible(bool)</slot>
+   <receiver>side_widget</receiver>
+   <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>233</x>
-     <y>137</y>
+     <x>393</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>288</x>
-     <y>137</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>series_search_icon_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>series_search_2</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>240</x>
-     <y>139</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>248</x>
-     <y>139</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>series_search_icon_3</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>series_search_3</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>217</x>
-     <y>141</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>252</x>
-     <y>138</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>series_search_icon_4</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>series_search_4</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>136</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>264</x>
-     <y>141</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>series_search_icon_5</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>series_search_5</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>222</x>
-     <y>143</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>257</x>
-     <y>145</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>games_search_icon_1</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>games_search_1</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>240</x>
-     <y>144</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>253</x>
-     <y>144</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>books_search_icon_1</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>books_search_1</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>224</x>
-     <y>143</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>250</x>
-     <y>143</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comics_search_icon_1</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comics_search_1</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>134</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>256</x>
-     <y>138</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>books_search_icon_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>books_search_2</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>212</x>
-     <y>148</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>256</x>
-     <y>138</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>books_search_icon_3</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>books_search_3</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>237</x>
-     <y>146</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>253</x>
-     <y>146</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>books_search_icon_4</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>books_search_4</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>230</x>
-     <y>146</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>253</x>
-     <y>145</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>books_search_icon_5</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>books_search_5</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>211</x>
-     <y>133</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>255</x>
-     <y>138</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comics_search_icon_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comics_search_2</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>132</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>264</x>
-     <y>139</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comics_search_icon_3</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comics_search_3</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>210</x>
-     <y>133</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>260</x>
-     <y>138</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comics_search_icon_4</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comics_search_4</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>210</x>
-     <y>143</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>272</x>
-     <y>144</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comics_search_icon_5</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comics_search_5</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>204</x>
-     <y>136</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>267</x>
-     <y>144</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>games_search_icon_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>games_search_2</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>218</x>
-     <y>138</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>267</x>
-     <y>140</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>games_search_icon_3</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>games_search_3</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>221</x>
-     <y>132</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>270</x>
-     <y>133</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>games_search_icon_4</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>games_search_4</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>221</x>
-     <y>148</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>258</x>
-     <y>151</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>games_search_icon_5</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>games_search_5</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>206</x>
-     <y>144</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>267</x>
-     <y>149</y>
+     <x>171</x>
+     <y>131</y>
     </hint>
    </hints>
   </connection>
