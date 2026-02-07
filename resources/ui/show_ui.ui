@@ -179,7 +179,71 @@ QDialog {
 QDialog QLabel {
     color: white;
 }
-</string>
+
+
+QScrollArea {
+    border: none;
+    background-color: transparent;
+}
+
+QScrollBar:vertical {
+    border: none;
+    background: transparent;
+    width: 8px;
+    margin: 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: rgba(255, 255, 255, 0.2);
+    min-height: 30px;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+QScrollBar::handle:vertical:pressed {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical,
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: none;
+    height: 0px;
+}
+
+/* Horizontal */
+QScrollBar:horizontal {
+    border: none;
+    background: transparent;
+    height: 8px;
+    margin: 0px;
+}
+
+QScrollBar::handle:horizontal {
+    background: rgba(255, 255, 255, 0.2);
+    min-width: 30px;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+QScrollBar::handle:horizontal:pressed {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+QScrollBar::add-line:horizontal,
+QScrollBar::sub-line:horizontal,
+QScrollBar::add-page:horizontal,
+QScrollBar::sub-page:horizontal {
+    background: none;
+    width: 0px;
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -255,19 +319,18 @@ QDialog QLabel {
              <property name="spacing">
               <number>8</number>
              </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
              <property name="topMargin">
               <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>20</number>
              </property>
              <property name="bottomMargin">
               <number>5</number>
              </property>
-             <item>
-              <widget class="Line" name="line_2">
-               <property name="orientation">
-                <enum>Qt::Orientation::Vertical</enum>
-               </property>
-              </widget>
-             </item>
              <item>
               <spacer name="horizontalSpacer">
                <property name="orientation">
@@ -288,17 +351,13 @@ QDialog QLabel {
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="Line" name="line_3">
-               <property name="orientation">
-                <enum>Qt::Orientation::Vertical</enum>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
            <item row="0" column="0">
             <widget class="QScrollArea" name="scrollArea_2">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -306,70 +365,13 @@ QDialog QLabel {
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-82</y>
-                <width>885</width>
+                <y>0</y>
+                <width>894</width>
                 <height>1004</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_3">
                <item row="1" column="0">
-                <widget class="QWidget" name="widget_7" native="true">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="sizeIncrement">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <layout class="QGridLayout" name="gridLayout_10">
-                  <property name="topMargin">
-                   <number>30</number>
-                  </property>
-                  <property name="verticalSpacing">
-                   <number>6</number>
-                  </property>
-                  <item row="0" column="0">
-                   <layout class="QHBoxLayout" name="horizontalLayout_5">
-                    <item alignment="Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="director_cover_label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>180</width>
-                        <height>250</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>180</width>
-                        <height>200</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>director Photo</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignmentFlag::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item alignment="Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="director_name">
-                      <property name="text">
-                       <string>Director name</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-               <item row="0" column="0">
                 <layout class="QVBoxLayout" name="verticalLayout_2">
                  <property name="spacing">
                   <number>20</number>
@@ -587,6 +589,49 @@ border-radius: 6px;</string>
                            </property>
                           </widget>
                          </item>
+                         <item>
+                          <widget class="QPushButton" name="favorite_button">
+                           <property name="maximumSize">
+                            <size>
+                             <width>40</width>
+                             <height>40</height>
+                            </size>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QPushButton {
+    border: none;
+    background: transparent;
+}
+QPushButton:hover {
+    background: rgba(255, 0, 0, 0.1);
+    border-radius: 5px;
+}</string>
+                           </property>
+                           <property name="text">
+                            <string/>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="../resources.qrc">
+                             <normaloff>:/icons/Icons/white_heart.png</normaloff>
+                             <normalon>:/icons/Icons/blue_heart.png</normalon>:/icons/Icons/white_heart.png</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>32</width>
+                             <height>32</height>
+                            </size>
+                           </property>
+                           <property name="checkable">
+                            <bool>true</bool>
+                           </property>
+                           <property name="flat">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
                         </layout>
                        </item>
                        <item>
@@ -793,7 +838,7 @@ border-radius: 6px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QWidget" name="widget_2" native="true">
+                    <widget class="QWidget" name="user_rating_widget" native="true">
                      <property name="styleSheet">
                       <string notr="true">QWidget {
 
@@ -934,7 +979,7 @@ border-radius: 6px;</string>
                  </item>
                 </layout>
                </item>
-               <item row="2" column="0">
+               <item row="3" column="0">
                 <widget class="QScrollArea" name="scrollArea_3">
                  <property name="minimumSize">
                   <size>
@@ -959,7 +1004,7 @@ border-radius: 6px;</string>
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>867</width>
+                    <width>876</width>
                     <height>285</height>
                    </rect>
                   </property>
@@ -981,6 +1026,63 @@ border-radius: 6px;</string>
                    </item>
                   </layout>
                  </widget>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QWidget" name="widget_7" native="true">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="sizeIncrement">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_10">
+                  <property name="topMargin">
+                   <number>30</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>6</number>
+                  </property>
+                  <item row="0" column="0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_5">
+                    <item alignment="Qt::AlignmentFlag::AlignTop">
+                     <widget class="QLabel" name="director_cover_label">
+                      <property name="minimumSize">
+                       <size>
+                        <width>180</width>
+                        <height>250</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>180</width>
+                        <height>200</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>director Photo</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignmentFlag::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item alignment="Qt::AlignmentFlag::AlignTop">
+                     <widget class="QLabel" name="director_name">
+                      <property name="text">
+                       <string>Director name</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </widget>
                </item>
               </layout>
@@ -1015,6 +1117,9 @@ border-radius: 6px;</string>
        </property>
        <item row="0" column="0">
         <widget class="QScrollArea" name="scrollArea_4">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -1023,8 +1128,8 @@ border-radius: 6px;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>922</width>
-            <height>668</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_11">
@@ -1058,7 +1163,23 @@ border-radius: 6px;</string>
  </widget>
  <resources>
   <include location="../resources.qrc"/>
-  <include location="../resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>ok_button</sender>
+   <signal>clicked()</signal>
+   <receiver>show</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>885</x>
+     <y>688</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>905</x>
+     <y>-37</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

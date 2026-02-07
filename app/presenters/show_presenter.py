@@ -22,6 +22,7 @@ class ShowPresenter:
         # Connect view signals
         self.view.category_changed.connect(self.on_category_changed)
         self.view.user_rating_changed.connect(self.on_user_rating_changed)
+        self.view.favorite_toggled.connect(self.on_favorite_toggled)
         
         # Set the categories
         self.movies_catag = ["Planned", "In_progress", "Completed", "On_hold", "Dropped"]
@@ -66,6 +67,13 @@ class ShowPresenter:
         print(f"User updated rating to: {new_rating}")
         self.pending_updates["user_rating"] = new_rating
         self.update_timer.start(3000)
+
+    def on_favorite_toggled(self, is_favorite: bool):
+        """Called when user toggles favorite status"""
+        print(f"User toggled favorite to: {is_favorite}")
+        self.pending_updates["favorite"] = is_favorite
+        self.update_timer.start(3000)
+
 
     @asyncSlot() # <--- CRITICAL: Allows QTimer to trigger this async function
     async def _update_media(self):

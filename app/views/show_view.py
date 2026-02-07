@@ -10,6 +10,7 @@ class ShowView(QDialog):
     """Pure UI component for show dialog"""
     category_changed = Signal(str)
     user_rating_changed = Signal(float)
+    favorite_toggled = Signal(bool)  
 
     def __init__(self):
         super().__init__()
@@ -22,6 +23,7 @@ class ShowView(QDialog):
         self.ui.status_combobox.currentTextChanged.connect(self.category_changed.emit) # Emit signal on category change
         self.ui.description_Button.clicked.connect(self._on_description_clicked) # Show description
         self.ui.trailer_Button.clicked.connect(self._on_trailer_clicked) # Open trailer link
+        self.ui.favorite_button.toggled.connect(self.on_favorite_toggled) # Emit signal on favorite toggle
 
         # Install event filter to detect clicks on user_rating_widget
         self.ui.user_rating_widget.installEventFilter(self)
@@ -38,7 +40,7 @@ class ShowView(QDialog):
     
 
     def _on_rating_widget_clicked(self):
-        current_rating = float(self.ui.user_rating.text()) if self.ui.user_rating.text() != "User rate" else 0.0
+        current_rating = float(self.ui.user_rating.text()) if self.ui.user_rating.text() in  ["User rate", None] else 0.0
         rating_dialog = UserRatingView(current_rating, self)
         rating_dialog.rating_changed.connect(self._on_rating_updated)
         rating_dialog.exec()
@@ -50,6 +52,10 @@ class ShowView(QDialog):
 
         # Save to database/emit to presenter
         self.user_rating_changed.emit(float(new_rating))
+
+    def on_favorite_toggled(self, checked):
+        print(f"Favorite toggled: {checked}")
+        self.favorite_toggled.emit(checked) 
 
 
     def set_details(self, details: dict):
@@ -82,6 +88,8 @@ class ShowView(QDialog):
 
         if user_media_details:
             self.ui.user_rating.setText(str(user_media_details.get("user_rating", "")))
+            if user_media_details.get("favorite", False):
+                self.ui.favorite_button.setChecked(True)
             self.set_current_category(user_media_details.get("status", ""))
             # self.ui.user_review.setText(str(user_media_details.get("review", "")))
             # self.ui.user_notes.setText(str(user_media_details.get("notes", "")))

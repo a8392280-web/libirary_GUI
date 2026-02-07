@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_uiqMBfny.ui'
+## Form generated from reading UI file 'main_uiVSdbaw.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.2
 ##
@@ -26,7 +26,7 @@ class Ui_main_widget(object):
     def setupUi(self, main_widget):
         if not main_widget.objectName():
             main_widget.setObjectName(u"main_widget")
-        main_widget.resize(1118, 838)
+        main_widget.resize(1236, 838)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -669,6 +669,75 @@ class Ui_main_widget(object):
         self.gridLayout_11.addLayout(self.verticalLayout_13, 0, 0, 1, 1)
 
         self.movies_tap_widget.addTab(self.movies_ended, "")
+        self.movies_favorites = QWidget()
+        self.movies_favorites.setObjectName(u"movies_favorites")
+        self.gridLayout_35 = QGridLayout(self.movies_favorites)
+        self.gridLayout_35.setSpacing(0)
+        self.gridLayout_35.setObjectName(u"gridLayout_35")
+        self.gridLayout_35.setContentsMargins(0, 9, 0, 0)
+        self.verticalLayout_33 = QVBoxLayout()
+        self.verticalLayout_33.setSpacing(0)
+        self.verticalLayout_33.setObjectName(u"verticalLayout_33")
+        self.verticalLayout_33.setContentsMargins(-1, 10, -1, -1)
+        self.horizontalLayout_32 = QHBoxLayout()
+        self.horizontalLayout_32.setSpacing(5)
+        self.horizontalLayout_32.setObjectName(u"horizontalLayout_32")
+        self.horizontalLayout_32.setContentsMargins(5, -1, 5, -1)
+        self.movies_search_icon_6 = QPushButton(self.movies_favorites)
+        self.movies_search_icon_6.setObjectName(u"movies_search_icon_6")
+        self.movies_search_icon_6.setIcon(icon3)
+        self.movies_search_icon_6.setIconSize(QSize(32, 32))
+        self.movies_search_icon_6.setCheckable(True)
+
+        self.horizontalLayout_32.addWidget(self.movies_search_icon_6)
+
+        self.movies_search_6 = QLineEdit(self.movies_favorites)
+        self.movies_search_6.setObjectName(u"movies_search_6")
+        self.movies_search_6.setMaximumSize(QSize(200, 30))
+        self.movies_search_6.setStyleSheet(u"")
+        self.movies_search_6.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.horizontalLayout_32.addWidget(self.movies_search_6)
+
+        self.line_10 = QFrame(self.movies_favorites)
+        self.line_10.setObjectName(u"line_10")
+        self.line_10.setFrameShape(QFrame.Shape.VLine)
+        self.line_10.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.horizontalLayout_32.addWidget(self.line_10)
+
+        self.movies_random_button_6 = QPushButton(self.movies_favorites)
+        self.movies_random_button_6.setObjectName(u"movies_random_button_6")
+        self.movies_random_button_6.setAutoFillBackground(False)
+        self.movies_random_button_6.setIcon(icon4)
+        self.movies_random_button_6.setIconSize(QSize(32, 32))
+        self.movies_random_button_6.setFlat(True)
+
+        self.horizontalLayout_32.addWidget(self.movies_random_button_6)
+
+        self.horizontalSpacer_33 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_32.addItem(self.horizontalSpacer_33)
+
+        self.refresh_button_6 = QPushButton(self.movies_favorites)
+        self.refresh_button_6.setObjectName(u"refresh_button_6")
+        self.refresh_button_6.setIcon(icon5)
+        self.refresh_button_6.setIconSize(QSize(32, 32))
+
+        self.horizontalLayout_32.addWidget(self.refresh_button_6)
+
+
+        self.verticalLayout_33.addLayout(self.horizontalLayout_32)
+
+        self.movies_list_6 = QListView(self.movies_favorites)
+        self.movies_list_6.setObjectName(u"movies_list_6")
+
+        self.verticalLayout_33.addWidget(self.movies_list_6)
+
+
+        self.gridLayout_35.addLayout(self.verticalLayout_33, 0, 0, 1, 1)
+
+        self.movies_tap_widget.addTab(self.movies_favorites, "")
 
         self.verticalLayout_3.addWidget(self.movies_tap_widget)
 
@@ -3028,15 +3097,10 @@ class Ui_main_widget(object):
 
 
         self.retranslateUi(main_widget)
-        self.movies_more.toggled.connect(self.side_widget.setHidden)
         self.movies_search_icon_5.toggled.connect(self.movies_search_5.setVisible)
         self.movies_search_icon_1.toggled.connect(self.movies_search_1.setVisible)
         self.movies_search_icon_2.toggled.connect(self.movies_search_2.setVisible)
         self.movies_search_icon_3.toggled.connect(self.movies_search_3.setVisible)
-        self.series_more.toggled.connect(self.side_widget.setHidden)
-        self.gmaes_more.toggled.connect(self.side_widget.setHidden)
-        self.books_more.toggled.connect(self.side_widget.setHidden)
-        self.comics_more.toggled.connect(self.side_widget.setHidden)
         self.series_search_icon_1.toggled.connect(self.series_search_1.setVisible)
         self.series_search_icon_2.toggled.connect(self.series_search_2.setVisible)
         self.series_search_icon_3.toggled.connect(self.series_search_3.setVisible)
@@ -3058,6 +3122,11 @@ class Ui_main_widget(object):
         self.games_search_icon_4.toggled.connect(self.games_search_4.setVisible)
         self.games_search_icon_5.toggled.connect(self.games_search_5.setVisible)
         self.movies_search_icon_4.toggled.connect(self.movies_search_4.setVisible)
+        self.comics_more.toggled.connect(self.side_widget.setHidden)
+        self.series_more.toggled.connect(self.side_widget.setHidden)
+        self.books_more.toggled.connect(self.side_widget.setHidden)
+        self.gmaes_more.toggled.connect(self.side_widget.setHidden)
+        self.movies_more.toggled.connect(self.side_widget.setHidden)
 
         self.stacked_body_Widget.setCurrentIndex(0)
         self.movies_tap_widget.setCurrentIndex(0)
@@ -3155,6 +3224,17 @@ class Ui_main_widget(object):
         self.movies_random_button_5.setText("")
         self.refresh_button_5.setText("")
         self.movies_tap_widget.setTabText(self.movies_tap_widget.indexOf(self.movies_ended), QCoreApplication.translate("main_widget", u"Watched", None))
+#if QT_CONFIG(tooltip)
+        self.movies_search_icon_6.setToolTip(QCoreApplication.translate("main_widget", u"Press to show the search bar ", None))
+#endif // QT_CONFIG(tooltip)
+        self.movies_search_icon_6.setText("")
+        self.movies_search_6.setPlaceholderText(QCoreApplication.translate("main_widget", u"Search (Name or Year)", None))
+#if QT_CONFIG(tooltip)
+        self.movies_random_button_6.setToolTip(QCoreApplication.translate("main_widget", u"Choose a random movie from this tap", None))
+#endif // QT_CONFIG(tooltip)
+        self.movies_random_button_6.setText("")
+        self.refresh_button_6.setText("")
+        self.movies_tap_widget.setTabText(self.movies_tap_widget.indexOf(self.movies_favorites), QCoreApplication.translate("main_widget", u"Favorites", None))
 #if QT_CONFIG(tooltip)
         self.series_more.setToolTip(QCoreApplication.translate("main_widget", u"Show/Hide the menu", None))
 #endif // QT_CONFIG(tooltip)

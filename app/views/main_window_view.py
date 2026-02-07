@@ -33,7 +33,8 @@ class MainWidgetView(QWidget):
                 "in_progress": self.ui.movies_search_1,
                 "on_hold": self.ui.movies_search_3,
                 "dropped": self.ui.movies_search_4,
-                "completed": self.ui.movies_search_5
+                "completed": self.ui.movies_search_5,
+                "favorites": self.ui.movies_search_6
             }
         
 
@@ -54,21 +55,25 @@ class MainWidgetView(QWidget):
         self.ui.show_comics.clicked.connect(lambda: self.show_comics_requested.emit())
         self.ui.show_setting.clicked.connect(lambda: self.show_setting_requested.emit())
 
-        
         self.ui.show_movies.clicked.connect(lambda: self.set_user_media("movies", "in_progress"))
         self.ui.movies_tap_widget.currentChanged.connect(self.on_tab_changed)
+
+
         self.ui.refresh_button_1.clicked.connect(lambda: self.set_user_media("movies", "in_progress",True))
         self.ui.refresh_button_2.clicked.connect(lambda: self.set_user_media("movies", "planned",True))
         self.ui.refresh_button_3.clicked.connect(lambda: self.set_user_media("movies", "on_hold",True))
         self.ui.refresh_button_4.clicked.connect(lambda: self.set_user_media("movies", "dropped",True))
         self.ui.refresh_button_5.clicked.connect(lambda: self.set_user_media("movies", "completed",True))
+        self.ui.refresh_button_6.clicked.connect(lambda: self.set_user_media("movies", "favorites", True))
 
-        
+
         self.ui.movies_random_button_1.clicked.connect(lambda: self.random_media_requested.emit("movie", "in_progress"))
         self.ui.movies_random_button_2.clicked.connect(lambda: self.random_media_requested.emit("movie", "planned"))
         self.ui.movies_random_button_3.clicked.connect(lambda: self.random_media_requested.emit("movie", "on_hold"))
         self.ui.movies_random_button_4.clicked.connect(lambda: self.random_media_requested.emit("movie", "dropped"))
         self.ui.movies_random_button_5.clicked.connect(lambda: self.random_media_requested.emit("movie", "completed"))
+        self.ui.movies_random_button_6.clicked.connect(lambda: self.random_media_requested.emit("movie", "favorites"))
+
 
         # Search button
         self.ui.movies_add_botton.clicked.connect(lambda: self.search_requested.emit())
@@ -117,6 +122,8 @@ class MainWidgetView(QWidget):
            self.set_user_media("movies", "dropped")
         elif index == 4:
            self.set_user_media("movies", "completed")
+        elif index == 5:
+            self.set_user_media("movies", "favorites")
 
 
     # app/views/main_widget_view.py

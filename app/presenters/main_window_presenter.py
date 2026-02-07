@@ -24,6 +24,7 @@ class MainWidgetPresenter:
             "on_hold": QStandardItemModel(),
             "dropped": QStandardItemModel(),
             "completed": QStandardItemModel(),
+            "favorites": QStandardItemModel(),
         }
 
         self.proxies = {}
@@ -160,7 +161,8 @@ class MainWidgetPresenter:
                 ui.movies_list_2, 
                 ui.movies_list_3, 
                 ui.movies_list_4, 
-                ui.movies_list_5
+                ui.movies_list_5,
+                ui.movies_list_6
             ]
         }
         
@@ -175,6 +177,7 @@ class MainWidgetPresenter:
             "on_hold":     widgets[2],
             "dropped":     widgets[3],
             "completed":   widgets[4],
+            "favorites":   widgets[5]
         }
 
     def handle_show_user_media(self, category: str, section: str, force: bool = False):
@@ -212,10 +215,14 @@ class MainWidgetPresenter:
             model.clear()
 
 
+            if section == "favorites":
+                url = f"users/me/media/?media_type={media_type}&favorite=true"
+            else:
+                url = f"users/me/media/?media_type={media_type}&status={section}"
+
             # Fetch data
-            data = await self.api.get(
-                f"users/me/media/?media_type={media_type}&status={section}"
-            )
+            data = await self.api.get(url)
+            
             
             # ✅ Add error handling
             if not data:
