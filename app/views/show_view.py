@@ -10,7 +10,9 @@ class ShowView(QDialog):
     """Pure UI component for show dialog"""
     category_changed = Signal(str)
     user_rating_changed = Signal(float)
-    favorite_toggled = Signal(bool)  
+    favorite_toggled = Signal(bool)
+    
+      
 
     def __init__(self):
         super().__init__()
@@ -88,14 +90,16 @@ class ShowView(QDialog):
 
         if user_media_details:
             self.ui.user_rating.setText(str(user_media_details.get("user_rating", "")))
-            if user_media_details.get("favorite", False):
-                self.ui.favorite_button.setChecked(True)
+
+            self.set_favorite_button(user_media_details.get("favorite", False))
             self.set_current_category(user_media_details.get("status", ""))
+
+
             # self.ui.user_review.setText(str(user_media_details.get("review", "")))
             # self.ui.user_notes.setText(str(user_media_details.get("notes", "")))
             # self.ui.user_progress.setValue(user_media_details.get("progress", 0))
             # self.ui.user_total_progress.setValue(user_media_details.get("total_progress", 0))
-            # self.ui.favorite_checkbox.setChecked(user_media_details.get("favorite", False))
+
 
 
 
@@ -144,3 +148,7 @@ class ShowView(QDialog):
                 # 3. Unblock signals so the user can still trigger it manually later
                 self.ui.status_combobox.blockSignals(False)
 
+    def set_favorite_button(self, is_favorite: bool):
+        self.ui.favorite_button.blockSignals(True)
+        self.ui.favorite_button.setChecked(is_favorite)
+        self.ui.favorite_button.blockSignals(False)

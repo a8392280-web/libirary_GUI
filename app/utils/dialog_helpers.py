@@ -11,9 +11,9 @@ class DialogHelper:
     """Reusable utilities for showing dialogs asynchronously"""
     
     @staticmethod
-    async def show_detail_dialog(api, media_type: str, item_id: int):
+    async def show_detail_dialog(api, media_type: str, item_id: int, tmdb_id: int = None):
         """
-        Fetches data and opens a detail dialog for any media type.
+        Fetches data( DB or API) and opens a detail dialog for any media type.
         
         Args:
             api: APIClient instance
@@ -27,18 +27,25 @@ class DialogHelper:
         
         try:
             # Fetch data
-            detail_data = await api.get(f"users/me/media/{media_type}/{item_id}")
+            if item_id:
+                detail_data = await api.get(f"users/me/media/{media_type}/{item_id}")
+                print(f"Fetched detail data: {item_id}")
             
+                if detail_data is None:
+                    QMessageBox.warning(
+                        None, 
+                        "Connection Issue", 
+                        "Could not retrieve data from server."
+                    )
+                    return None
+                
             # Restore cursor as soon as data arrives
             QApplication.restoreOverrideCursor()
             
-            if detail_data is None:
-                QMessageBox.warning(
-                    None, 
-                    "Connection Issue", 
-                    "Could not retrieve data from server."
-                )
-                return None
+            if tmdb_id:
+                detail_data = await api.post(f"media/movies/add-from-api?tmdb_id={tmdb_id}")
+                detail_data = {"user_media": None, "media": detail_data}
+
             
             # Setup View and Presenter
             show_dialog = ShowView()

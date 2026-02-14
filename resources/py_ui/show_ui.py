@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'show_uizlYBBH.ui'
+## Form generated from reading UI file 'show_uiRCuXFu.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.2
 ##
@@ -16,16 +16,17 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QHBoxLayout,
-    QLabel, QPushButton, QScrollArea, QSizePolicy,
-    QSpacerItem, QStackedWidget, QTabWidget, QVBoxLayout,
-    QWidget)
+    QLabel, QListWidget, QListWidgetItem, QPushButton,
+    QScrollArea, QSizePolicy, QSpacerItem, QTabWidget,
+    QVBoxLayout, QWidget)
+
 from .. import resources_rc
 
 class Ui_show(object):
     def setupUi(self, show):
         if not show.objectName():
             show.setObjectName(u"show")
-        show.resize(922, 713)
+        show.resize(898, 713)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -38,7 +39,8 @@ class Ui_show(object):
 "QWidget#scroll_content, \n"
 "QWidget#info_scrollarea,\n"
 "QWidget#scroll_content_2, \n"
-"QWidget#info_scrollarea_2 {\n"
+"QWidget#info_scrollarea_2,\n"
+"QListWidget#ep_list_widget {\n"
 "    background-color: #182126;\n"
 "    border: none;\n"
 "}\n"
@@ -71,10 +73,10 @@ class Ui_show(object):
 "    border-bottom: 2px solid #5891ff;\n"
 "    background-color: rgba(255, 255, 255, 0.12);\n"
 "    outline: none;\n"
-"}\n"
+"}"
+                        "\n"
 "\n"
-"/* ===== BUTTONS ====="
-                        " */\n"
+"/* ===== BUTTONS ===== */\n"
 "QPushButton {\n"
 "    background-color: #2e3a4b;\n"
 "    border: 1px solid rgba(255, 255, 255, 0.15);\n"
@@ -113,9 +115,9 @@ class Ui_show(object):
 "\n"
 "QComboBox:focus {\n"
 "    border: 1px solid #5891ff;\n"
-"    background-color: rgba(255, 255, 255, 0.12);\n"
-""
-                        "    outline: none;\n"
+"    background-col"
+                        "or: rgba(255, 255, 255, 0.12);\n"
+"    outline: none;\n"
 "}\n"
 "\n"
 "QComboBox::drop-down {\n"
@@ -160,11 +162,11 @@ class Ui_show(object):
 "\n"
 "QTabBar::tab:selected {\n"
 "    color: #cad1d9;\n"
-"    border-bottom: 3px solid #fbffff;\n"
+"    border-bottom: "
+                        "3px solid #fbffff;\n"
 "}\n"
 "\n"
-"Q"
-                        "TabBar::tab:hover {\n"
+"QTabBar::tab:hover {\n"
 "    color: #cad1d9;\n"
 "}\n"
 "\n"
@@ -212,9 +214,9 @@ class Ui_show(object):
 "}\n"
 "\n"
 "QScrollBar::add-line:vertical,\n"
-"QScrollBar::sub-line:vertical,\n"
-"QScrollBar::add-page:vert"
+"QScrollBar::sub-line:vert"
                         "ical,\n"
+"QScrollBar::add-page:vertical,\n"
 "QScrollBar::sub-page:vertical {\n"
 "    background: none;\n"
 "    height: 0px;\n"
@@ -262,15 +264,6 @@ class Ui_show(object):
         self.gridLayout_4.setSpacing(0)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.gridLayout_4.setContentsMargins(10, 30, 10, 5)
-        self.stackedWidget = QStackedWidget(self.tab)
-        self.stackedWidget.setObjectName(u"stackedWidget")
-        self.stackedWidget.setStyleSheet(u"")
-        self.show_widget = QWidget()
-        self.show_widget.setObjectName(u"show_widget")
-        self.gridLayout_2 = QGridLayout(self.show_widget)
-        self.gridLayout_2.setSpacing(0)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setSpacing(8)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -279,21 +272,21 @@ class Ui_show(object):
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.ok_button = QPushButton(self.show_widget)
+        self.ok_button = QPushButton(self.tab)
         self.ok_button.setObjectName(u"ok_button")
 
         self.horizontalLayout.addWidget(self.ok_button)
 
 
-        self.gridLayout_2.addLayout(self.horizontalLayout, 1, 0, 1, 1)
+        self.gridLayout_4.addLayout(self.horizontalLayout, 1, 0, 1, 1)
 
-        self.scrollArea_2 = QScrollArea(self.show_widget)
+        self.scrollArea_2 = QScrollArea(self.tab)
         self.scrollArea_2.setObjectName(u"scrollArea_2")
         self.scrollArea_2.setStyleSheet(u"")
         self.scrollArea_2.setWidgetResizable(True)
         self.info_scrollarea = QWidget()
         self.info_scrollarea.setObjectName(u"info_scrollarea")
-        self.info_scrollarea.setGeometry(QRect(0, 0, 894, 1004))
+        self.info_scrollarea.setGeometry(QRect(0, 0, 870, 1004))
         self.gridLayout_3 = QGridLayout(self.info_scrollarea)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.verticalLayout_2 = QVBoxLayout()
@@ -661,7 +654,7 @@ class Ui_show(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.cast_scroll_area = QWidget()
         self.cast_scroll_area.setObjectName(u"cast_scroll_area")
-        self.cast_scroll_area.setGeometry(QRect(0, 0, 876, 285))
+        self.cast_scroll_area.setGeometry(QRect(0, 0, 852, 285))
         self.gridLayout_9 = QGridLayout(self.cast_scroll_area)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
         self.gridLayout_9.setContentsMargins(0, 0, 0, 0)
@@ -705,38 +698,69 @@ class Ui_show(object):
 
         self.scrollArea_2.setWidget(self.info_scrollarea)
 
-        self.gridLayout_2.addWidget(self.scrollArea_2, 0, 0, 1, 1)
-
-        self.stackedWidget.addWidget(self.show_widget)
-
-        self.gridLayout_4.addWidget(self.stackedWidget, 0, 0, 2, 1)
+        self.gridLayout_4.addWidget(self.scrollArea_2, 0, 0, 1, 1)
 
         self.tabWidget.addTab(self.tab, "")
+        self.tab_3 = QWidget()
+        self.tab_3.setObjectName(u"tab_3")
+        self.gridLayout_2 = QGridLayout(self.tab_3)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.verticalLayout_4 = QVBoxLayout()
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.label = QLabel(self.tab_3)
+        self.label.setObjectName(u"label")
+        font1 = QFont()
+        font1.setFamilies([u"Nirmala UI"])
+        font1.setBold(True)
+        self.label.setFont(font1)
+
+        self.verticalLayout_4.addWidget(self.label)
+
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.find_button_1 = QPushButton(self.tab_3)
+        self.find_button_1.setObjectName(u"find_button_1")
+
+        self.verticalLayout_3.addWidget(self.find_button_1)
+
+        self.find_button_2 = QPushButton(self.tab_3)
+        self.find_button_2.setObjectName(u"find_button_2")
+
+        self.verticalLayout_3.addWidget(self.find_button_2)
+
+        self.find_button_3 = QPushButton(self.tab_3)
+        self.find_button_3.setObjectName(u"find_button_3")
+
+        self.verticalLayout_3.addWidget(self.find_button_3)
+
+        self.find_button_4 = QPushButton(self.tab_3)
+        self.find_button_4.setObjectName(u"find_button_4")
+
+        self.verticalLayout_3.addWidget(self.find_button_4)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer_2)
+
+
+        self.verticalLayout_4.addLayout(self.verticalLayout_3)
+
+
+        self.gridLayout_2.addLayout(self.verticalLayout_4, 0, 0, 1, 1)
+
+        self.tabWidget.addTab(self.tab_3, "")
         self.tab_2 = QWidget()
         self.tab_2.setObjectName(u"tab_2")
         self.gridLayout_12 = QGridLayout(self.tab_2)
         self.gridLayout_12.setSpacing(0)
         self.gridLayout_12.setObjectName(u"gridLayout_12")
         self.gridLayout_12.setContentsMargins(0, 0, 0, 0)
-        self.scrollArea_4 = QScrollArea(self.tab_2)
-        self.scrollArea_4.setObjectName(u"scrollArea_4")
-        self.scrollArea_4.setStyleSheet(u"")
-        self.scrollArea_4.setWidgetResizable(True)
-        self.scroll_content_2 = QWidget()
-        self.scroll_content_2.setObjectName(u"scroll_content_2")
-        self.scroll_content_2.setGeometry(QRect(0, 0, 922, 668))
-        self.gridLayout_11 = QGridLayout(self.scroll_content_2)
-        self.gridLayout_11.setSpacing(0)
-        self.gridLayout_11.setObjectName(u"gridLayout_11")
-        self.gridLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.main_layout = QVBoxLayout()
-        self.main_layout.setObjectName(u"main_layout")
+        self.ep_list_widget = QListWidget(self.tab_2)
+        self.ep_list_widget.setObjectName(u"ep_list_widget")
+        self.ep_list_widget.setAlternatingRowColors(False)
+        self.ep_list_widget.setSpacing(3)
 
-        self.gridLayout_11.addLayout(self.main_layout, 0, 0, 1, 1)
-
-        self.scrollArea_4.setWidget(self.scroll_content_2)
-
-        self.gridLayout_12.addWidget(self.scrollArea_4, 0, 0, 1, 1)
+        self.gridLayout_12.addWidget(self.ep_list_widget, 1, 0, 1, 1)
 
         self.tabWidget.addTab(self.tab_2, "")
 
@@ -747,7 +771,6 @@ class Ui_show(object):
         self.ok_button.clicked.connect(show.close)
 
         self.tabWidget.setCurrentIndex(0)
-        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(show)
@@ -780,6 +803,12 @@ class Ui_show(object):
         self.director_cover_label.setText(QCoreApplication.translate("show", u"director Photo", None))
         self.director_name.setText(QCoreApplication.translate("show", u"Director name", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("show", u"Info", None))
+        self.label.setText(QCoreApplication.translate("show", u"Find In:-", None))
+        self.find_button_1.setText(QCoreApplication.translate("show", u"PushButton", None))
+        self.find_button_2.setText(QCoreApplication.translate("show", u"PushButton", None))
+        self.find_button_3.setText(QCoreApplication.translate("show", u"PushButton", None))
+        self.find_button_4.setText(QCoreApplication.translate("show", u"PushButton", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("show", u"Find", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("show", u"Episode", None))
     # retranslateUi
 

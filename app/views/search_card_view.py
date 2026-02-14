@@ -19,11 +19,12 @@ class MediaCard(QWidget):
         description: str,
         released: str,
         item_id: int,
+        tmdb_id: int,
         parent=None
     ):
         super().__init__(parent)
 
-
+        self.tmdb_id = tmdb_id
         self.item_id = item_id
         self.cover_url = cover_url
         self.is_pressed = False

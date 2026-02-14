@@ -101,11 +101,12 @@ class SearchPresenter(QObject):
                 cover_url=result.get("cover_url", ""),
                 description=result.get("description", ""),
                 released=result.get("released", ""),
-                item_id=result.get("id")
+                item_id= result.get("id") if result.get("id") else None, # i tink its usless but just in case
+                tmdb_id= result.get("tmdb_id") if result.get("tmdb_id") else None # same as above
             )
             
             # Use a helper to avoid closure issues and handle clicks
-            card.clicked.connect(lambda i=result.get("id"): self.on_card_clicked(i))
+            card.clicked.connect(lambda i=result.get("id"), t=result.get("tmdb_id"): self.on_card_clicked(i, t))
             
             self.view.add_search_result(card)
 
@@ -122,14 +123,14 @@ class SearchPresenter(QObject):
             # Yield to event loop to keep UI smooth
             await asyncio.sleep(0.01)
 
-    def on_card_clicked(self, item_id):
+    def on_card_clicked(self, item_id, tmdb_id):
         """Bridge Qt Signal to Async Task"""
-        if item_id:
-            asyncio.create_task(self._show_detail(item_id))
+        if item_id or tmdb_id:
+            asyncio.create_task(self._show_detail(item_id, tmdb_id))
     
-    async def _show_detail(self, item_id):
-        """✅ Now just delegates to the shared helper"""
-        await DialogHelper.show_detail_dialog(self.api, "movie", item_id)
+    async def _show_detail(self, item_id, tmdb_id):
+        """Show detail dialog for a movie."""
+        await DialogHelper.show_detail_dialog(self.api, "movie", item_id, tmdb_id)
 
     def cancel_current_search(self):
         if self._current_task and not self._current_task.done():

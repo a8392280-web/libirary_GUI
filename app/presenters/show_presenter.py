@@ -1,7 +1,15 @@
 import asyncio
+import webbrowser
 from PySide6.QtCore import QTimer
 from qasync import asyncSlot
 import httpx
+from PySide6.QtWidgets import QListWidgetItem
+from PySide6.QtGui import QIcon, QFont, QColor
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QListWidgetItem, QWidget, QHBoxLayout, QLabel, QMessageBox
+from PySide6.QtGui import QIcon, QFont, QColor, QPixmap
+from PySide6.QtCore import Qt
+from app.utils.movies_fetch import search_arabseed,search_akwam
 
 class ShowPresenter:
     def __init__(self, view, api, media_type, media_data):
@@ -31,6 +39,27 @@ class ShowPresenter:
             self.view.set_category_options(self.movies_catag)
         
         self.view.set_details(self.prepare_movie_for_ui(media_data))
+
+        self.setup_media_type_ui()
+
+        self.view.ui.find_button_1.clicked.connect(self.on_find_button_1_clicked)
+        self.view.ui.find_button_2.clicked.connect(self.on_find_button_2_clicked)
+        self.view.ui.find_button_3.clicked.connect(self.on_find_button_3_clicked)
+        self.view.ui.find_button_4.clicked.connect(self.on_find_button_4_clicked)
+
+
+
+    def setup_media_type_ui(self):
+        if self.media_type == "movie":
+            self.view.ui.tabWidget.setTabVisible(2, False)
+
+        self.view.ui.find_button_1.setText("Cineby")
+        self.view.ui.find_button_2.setText("VidSrc")
+        self.view.ui.find_button_3.setText("ArabSeed")
+        self.view.ui.find_button_4.setText("Akwam")
+
+
+
     
     def prepare_movie_for_ui(self, movie: dict) -> dict:
         # ---------- Runtime ----------
@@ -112,3 +141,116 @@ class ShowPresenter:
             print("Dialog closing, forcing save of pending updates...")
             self.update_timer.stop()
             await self._update_media()
+
+
+    def on_find_button_1_clicked(self):
+        print("Button clicked")
+        tmdb_id = self.media_data.get("media",{}).get("tmdb_id",None)
+        if tmdb_id:
+            url = f"https://www.vidking.net/embed/{self.media_type}/{tmdb_id}"
+            webbrowser.open(url)
+            print(f"Opened: {url}")
+
+    def on_find_button_2_clicked(self):
+        print("Button clicked")
+        tmdb_id = self.media_data.get("media",{}).get("tmdb_id",None)
+        if tmdb_id:
+            url = f"https://vidsrc-embed.ru/embed/{self.media_type}?tmdb={tmdb_id}"
+            webbrowser.open(url)
+            print(f"Opened: {url}")
+
+    def on_find_button_3_clicked(self):
+        print("Button clicked")
+        asyncio.create_task(self.arabseed_search())
+
+
+    async def arabseed_search(self):
+        button = self.view.ui.find_button_3
+
+        self.view.ui.find_button_3.setEnabled(False)
+        self.view.ui.find_button_4.setEnabled(False)
+
+        # change UI state
+        button.setEnabled(False)
+        button.setText("Searching...")
+
+
+        try:
+            title = self.media_data.get("media", {}).get("title")
+
+            if not title:
+                print("No title found")
+                return
+
+            title = title.replace(":", " ")
+
+            url = await search_arabseed(title)
+
+            if url:
+                webbrowser.open(url)
+                print(f"Opened: {url}")
+
+            else:
+                QMessageBox.information(
+                    self.view,
+                    "Not Found",
+                    "No result found on ArabSeed."
+                )
+                print("No result found")
+
+        finally:
+            # ALWAYS restore button even if error happens
+            button.setEnabled(True)
+            button.setText("ArabSeed")
+            self.view.ui.find_button_3.setEnabled(True)
+            self.view.ui.find_button_4.setEnabled(True)
+
+
+
+    def on_find_button_4_clicked(self):
+        print("Button clicked")
+        asyncio.create_task(self.akwam_search())
+
+
+    async def akwam_search(self):
+        button = self.view.ui.find_button_4
+
+        self.view.ui.find_button_3.setEnabled(False)
+        self.view.ui.find_button_4.setEnabled(False)
+
+        # change UI state
+        button.setEnabled(False)
+        button.setText("Searching...")
+
+
+        try:
+            title = self.media_data.get("media", {}).get("title")
+            year = self.media_data.get("media", {}).get("released")
+
+            if not title:
+                print("No title found")
+                return
+
+            title = title.replace(":", "")
+
+            url = await search_akwam(title,year if year else 0)
+
+            if url:
+                webbrowser.open(url)
+                print(f"Opened: {url}")
+
+            else:
+                QMessageBox.information(
+                    self.view,
+                    "Not Found",
+                    "No result found on Akwam."
+                )
+                print("No result found")
+
+        finally:
+            # ALWAYS restore button even if error happens
+            button.setEnabled(True)
+            button.setText("Akwam")
+            self.view.ui.find_button_3.setEnabled(True)
+            self.view.ui.find_button_4.setEnabled(True)
+
