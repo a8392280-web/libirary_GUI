@@ -6,3 +6,7 @@ venv
 *.ini
 assets/
 __pycache__/
+dist/
+build/
+*.egg-info
+*.log
