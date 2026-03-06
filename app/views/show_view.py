@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QDialog, QMessageBox
 from PySide6.QtCore import Qt, Signal, QEvent
 from app.views.cast_view import CastCard
 from resources.py_ui.show_ui import Ui_show
-from app.utils.image_loder import get_image_loader
+from app.utils.image_loader import get_image_loader
 import webbrowser
 from .user_rating_view import UserRatingView
 

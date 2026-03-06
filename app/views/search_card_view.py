@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QFont
-from app.utils.image_loder import get_image_loader
+from app.utils.image_loader import get_image_loader
 
 
 class MediaCard(QWidget):

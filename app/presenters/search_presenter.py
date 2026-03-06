@@ -3,7 +3,7 @@ from PySide6.QtCore import QObject, QTimer
 from qasync import asyncSlot
 
 from app.views.search_card_view import MediaCard
-from app.utils.image_loder import get_image_loader
+from app.utils.image_loader import get_image_loader
 from app.utils.dialog_helpers import DialogHelper
 
 from app.config.providers import PROVIDERS

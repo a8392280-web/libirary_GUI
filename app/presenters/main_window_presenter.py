@@ -1,5 +1,6 @@
 # presenters/main_widget_presenter.py
-from app.views.movie_delegate import MovieDelegate
+from app.utils.image_loader import get_image_loader
+from app.views.media_delegate import MediaDelegate
 from app.views.search_view import SearchView
 from app.presenters.search_presenter import SearchPresenter
 from app.utils.dialog_helpers import DialogHelper
@@ -51,7 +52,7 @@ class MainWidgetPresenter:
             for section in self.SECTION_CONFIG.keys()
         }
 
-        self.delegate = MovieDelegate()
+        self.delegate = MediaDelegate()
         self.search_dialog = None
         self.search_presenter = None
         self._views_setup = set()
@@ -175,9 +176,13 @@ class MainWidgetPresenter:
                 standard_item.setData(item.get("title"), Qt.UserRole + 1)
                 standard_item.setData(item.get("released"), Qt.UserRole + 2)
                 standard_item.setData(item.get("id"), Qt.UserRole + 4)
-                standard_item.setData(item.get("cover_url", ""), Qt.UserRole + 5)
+                cover_url = item.get("cover_url", "")
+                standard_item.setData(cover_url, Qt.UserRole + 5)
                 standard_item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
                 model.appendRow(standard_item)
+
+                if cover_url:
+                    get_image_loader().prefetch(cover_url)
         
         finally:
             state['is_loading'] = False
