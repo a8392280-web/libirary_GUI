@@ -1,12 +1,24 @@
-.env
-venv
-.vscode
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
 *.pys
 *.pyc
-*.ini
-assets/
-__pycache__/
-dist/
+
+# Virtual environment
+venv/
+env/
+.env
+
+# PyInstaller output
 build/
-*.egg-info
-*.log
+dist/
+*.spec
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
