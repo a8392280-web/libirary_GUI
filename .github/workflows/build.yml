@@ -23,8 +23,8 @@ jobs:
       # 3. Install all your dependencies
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install pyside6 pyinstaller qasync requests packaging platformdirs httpx pydantic aiofiles
+          python -m pip install --upgrade pip 
+          pip install pyside6 pyinstaller qasync requests packaging platformdirs httpx pydantic aiofiles pillows
 
       # 4. Build the .exe with PyInstaller
       - name: Build executable
