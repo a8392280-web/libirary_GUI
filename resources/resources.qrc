@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>Icons/anime.png</file>
+    <file>Icons/anime2.png</file>
     <file>Icons/blue_heart.png</file>
     <file>Icons/white_heart.png</file>
     <file>Icons/refresh.png</file>

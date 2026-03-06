@@ -67,7 +67,21 @@ class ShowView(QDialog):
         if media_details:
             self.ui.title_lable.setText(media_details.get("title", ""))
             self.ui.released_lable.setText(str(media_details.get("released", "")))
-            self.ui.runtime__lable.setText(str(media_details.get("runtime", "")))
+
+
+            if media_details.get("runtime"):
+                self.ui.runtime__lable.setText(str(media_details.get("runtime", "")))
+
+            if media_details.get("ep_runtime"):
+                self.ui.runtime__lable.setText(str(media_details.get("ep_runtime", "")))
+
+            if media_details.get("playtime"):
+                self.ui.runtime__lable.setText(str(media_details.get("playtime", "")))
+
+
+
+
+
             self.ui.gener_lable.setText(str(media_details.get("genres", "")))
             self.image_loader.load_image(url=media_details.get("cover_url"),label=self.ui.cover_lable,width=180,height=270,placeholder="⏳",error_text="🖼️")
             self.ui.director_name.setText(media_details.get("director_name", ""))

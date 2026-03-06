@@ -11,44 +11,64 @@ class DialogHelper:
     """Reusable utilities for showing dialogs asynchronously"""
     
     @staticmethod
-    async def show_detail_dialog(api, media_type: str, item_id: int, tmdb_id: int = None):
+    async def show_detail_dialog(api, media_type: str, item_id: int = None, tmdb_id: int = None, 
+                                 mal_id: int = None, rawg_id: int = None, ol_id: str = None):
         """
-        Fetches data( DB or API) and opens a detail dialog for any media type.
-        
-        Args:
-            api: APIClient instance
-            media_type: 'movie', 'series', 'game', etc.
-            item_id: The ID of the media item
-            
-        Returns:
-            Dialog result code (QDialog.Accepted/Rejected) or None on error
+        Fetches data (DB or API) and opens a detail dialog for any media type.
         """
         QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))
         
+        # ✅ Map plural/internal names to the singular form the backend expects
+        MEDIA_MAP = {
+            "movies": "movies",
+            "movie": "movies",
+            "series": "series",
+            "games": "games",
+            "game": "games",
+            "anime": "anime",
+            "books": "books",
+            "book": "books",
+            "manga": "manga",
+            "comics": "manga" # If you use 'comics' in UI but 'manga' in backend
+        }
+
+        # Normalize the media_type (e.g., "movies" -> "movie")
+        media_type = MEDIA_MAP.get(media_type.lower(), media_type)
+
         try:
-            # Fetch data
+            detail_data = None
+
+            # 1. If we have an item_id, we are fetching from the user's personal collection
             if item_id:
+                # Note: Fixed the URL structure to match standard REST patterns
                 detail_data = await api.get(f"users/me/media/{media_type}/{item_id}")
-                print(f"Fetched detail data: {item_id}")
-            
-                if detail_data is None:
-                    QMessageBox.warning(
-                        None, 
-                        "Connection Issue", 
-                        "Could not retrieve data from server."
-                    )
-                    return None
-                
+                print(f"Fetched collection detail for {media_type}: {item_id}")
+
+            # 2. If we have an external ID, we are fetching from the global API (TMDB, RAWG, etc.)
+            elif tmdb_id:
+                response = await api.post(f"media/{media_type}/from-api?tmdb_id={tmdb_id}")
+                detail_data = {"user_media": None, "media": response}
+            elif mal_id:
+                response = await api.post(f"media/{media_type}/from-api?mal_id={mal_id}")
+                detail_data = {"user_media": None, "media": response}
+            elif rawg_id:
+                response = await api.post(f"media/{media_type}/from-api?rawg_id={rawg_id}")
+                detail_data = {"user_media": None, "media": response}
+            elif ol_id:
+                response = await api.post(f"media/{media_type}/from-api?ol_id={ol_id}")
+                detail_data = {"user_media": None, "media": response}
+
+            if not detail_data:
+                QApplication.restoreOverrideCursor()
+                QMessageBox.warning(None, "Data Error", f"Could not retrieve details for this {media_type}.")
+                return None
+
             # Restore cursor as soon as data arrives
             QApplication.restoreOverrideCursor()
-            
-            if tmdb_id:
-                detail_data = await api.post(f"media/movies/add-from-api?tmdb_id={tmdb_id}")
-                detail_data = {"user_media": None, "media": detail_data}
 
-            
             # Setup View and Presenter
             show_dialog = ShowView()
+            # Pass normalized media_type so the presenter knows if it's a 'game', 'movie', etc.
             show_presenter = ShowPresenter(show_dialog, api, media_type, detail_data)
             
             # Prevent garbage collection
@@ -64,9 +84,7 @@ class DialogHelper:
             return result
             
         except Exception as e:
-            # Ensure cursor is restored even on error
             QApplication.restoreOverrideCursor()
-            
             print(f"Error loading detail: {e}")
             import traceback
             traceback.print_exc()
@@ -80,39 +98,27 @@ class DialogHelper:
     
     @staticmethod
     async def _wait_for_dialog(dialog):
-        """
-        Runs a dialog asynchronously with safety checks.
-        
-        Args:
-            dialog: QDialog instance
-            
-        Returns:
-            Dialog result code
-        """
+        """Runs a dialog asynchronously without blocking the event loop."""
         future = asyncio.get_running_loop().create_future()
         
-        # Success path: Dialog finishes normally
         def handle_finished(result):
             if not future.done():
                 future.set_result(result)
         
-        # Safety path: Dialog destroyed before finishing
         def handle_destroyed():
             if not future.done():
-                future.set_result(0)  # QDialog.Rejected
+                future.set_result(0) 
         
         dialog.finished.connect(handle_finished)
         dialog.destroyed.connect(handle_destroyed)
         
-        # Open as window-modal but non-blocking
         dialog.open()
         
         try:
             return await future
         finally:
-            # Disconnect signals to prevent memory leaks
             try:
                 dialog.finished.disconnect(handle_finished)
                 dialog.destroyed.disconnect(handle_destroyed)
             except Exception:
-                pass  # Dialog might already be gone
+                pass

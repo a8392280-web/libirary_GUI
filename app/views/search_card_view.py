@@ -20,12 +20,18 @@ class MediaCard(QWidget):
         released: str,
         item_id: int,
         tmdb_id: int,
+        mal_id: int,
+        rawg_id: int,
+        ol_id: int,
         parent=None
     ):
         super().__init__(parent)
-
-        self.tmdb_id = tmdb_id
+        
         self.item_id = item_id
+        self.tmdb_id = tmdb_id
+        self.mal_id = mal_id
+        self.rawg_id = rawg_id
+        self.ol_id = ol_id
         self.cover_url = cover_url
         self.is_pressed = False
         self.image_loader = get_image_loader()

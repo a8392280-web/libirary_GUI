@@ -17,6 +17,8 @@ class ShowPresenter:
         self.api = api
         self.media_type = media_type
         self.media_data = media_data
+
+        print(self.media_data)
         
         # Single debounce timer for all updates
         self.update_timer = QTimer()
@@ -33,58 +35,60 @@ class ShowPresenter:
         self.view.favorite_toggled.connect(self.on_favorite_toggled)
         
         # Set the categories
-        self.movies_catag = ["Planned", "In_progress", "Completed", "On_hold", "Dropped"]
+        self.catag = ["Planned", "In_progress", "Completed", "On_hold", "Dropped"]
         
-        if media_type == "movie":
-            self.view.set_category_options(self.movies_catag)
         
-        self.view.set_details(self.prepare_movie_for_ui(media_data))
+        self.view.set_category_options(self.catag)
+        
+        self.view.set_details(self.prepare_media_for_ui(media_data))
 
         self.setup_media_type_ui()
 
-        self.view.ui.find_button_1.clicked.connect(self.on_find_button_1_clicked)
-        self.view.ui.find_button_2.clicked.connect(self.on_find_button_2_clicked)
-        self.view.ui.find_button_3.clicked.connect(self.on_find_button_3_clicked)
-        self.view.ui.find_button_4.clicked.connect(self.on_find_button_4_clicked)
+        if media_type == "movies":
+            self.view.ui.find_button_1.clicked.connect(self.on_find_button_1_clicked)
+            self.view.ui.find_button_2.clicked.connect(self.on_find_button_2_clicked)
+            self.view.ui.find_button_3.clicked.connect(self.on_find_button_3_clicked)
+            self.view.ui.find_button_4.clicked.connect(self.on_find_button_4_clicked)
 
 
 
     def setup_media_type_ui(self):
-        if self.media_type == "movie":
+        if self.media_type == "movies":
             self.view.ui.tabWidget.setTabVisible(2, False)
-
-        self.view.ui.find_button_1.setText("Cineby")
-        self.view.ui.find_button_2.setText("VidSrc")
-        self.view.ui.find_button_3.setText("ArabSeed")
-        self.view.ui.find_button_4.setText("Akwam")
-
+            self.view.ui.find_button_1.setText("Cineby")
+            self.view.ui.find_button_2.setText("VidSrc")
+            self.view.ui.find_button_3.setText("ArabSeed")
+            self.view.ui.find_button_4.setText("Akwam")
 
 
     
-    def prepare_movie_for_ui(self, movie: dict) -> dict:
-        # ---------- Runtime ----------
-        runtime = movie.get("media", {}).get("runtime", 0)
-        if runtime:
-            hours = runtime // 60
-            minutes = runtime % 60
-            movie["media"]["runtime"] = f"{hours}h {minutes}m"
-        else:
-            movie["media"]["runtime"] = "N/A"
-        
-        # ---------- Director ----------
-        if movie.get("media", {}).get("director"):
-            parts = movie["media"]["director"].split(",", 1)
-            director_name = parts[0].strip()
-            director_image = ""
-            if len(parts) > 1:
-                director_image = parts[1].strip()
-            movie["media"]["director_name"] = director_name
-            movie["media"]["director_image"] = director_image
-        
+    def prepare_media_for_ui(self, media: dict) -> dict:
+
+        if self.media_type == "movies":
+            # ---------- Runtime ----------
+            runtime = media.get("media", {}).get("runtime", 0)
+            if runtime:
+                hours = runtime // 60
+                minutes = runtime % 60
+                media["media"]["runtime"] = f"{hours}h {minutes}m"
+            else:
+                media["media"]["runtime"] = "N/A"
+            
+            # ---------- Director ----------
+            if media.get("media", {}).get("director"):
+                parts = media["media"]["director"].split(",", 1)
+                director_name = parts[0].strip()
+                director_image = ""
+                if len(parts) > 1:
+                    director_image = parts[1].strip()
+                media["media"]["director_name"] = director_name
+                media["media"]["director_image"] = director_image
+            
+
         # ---------- Genres ----------
-        movie["media"]["genres"] = ", ".join(movie.get("media", {}).get("genres", []))
-        return movie
-    
+        media["media"]["genres"] = ", ".join(media.get("media", {}).get("genres", []))
+        return media
+
     def on_category_changed(self, new_category: str):
         """Called when user changes category"""
         print(f"User selected category: {new_category}")
@@ -147,7 +151,11 @@ class ShowPresenter:
         print("Button clicked")
         tmdb_id = self.media_data.get("media",{}).get("tmdb_id",None)
         if tmdb_id:
-            url = f"https://www.vidking.net/embed/{self.media_type}/{tmdb_id}"
+            if self.media_type == "movies":
+                vidking_media_type = "movie"
+            elif self.media_type == "series":
+                vidking_media_type = "tv"
+            url = f"https://www.vidking.net/embed/{vidking_media_type}/{tmdb_id}"
             webbrowser.open(url)
             print(f"Opened: {url}")
 
@@ -155,7 +163,11 @@ class ShowPresenter:
         print("Button clicked")
         tmdb_id = self.media_data.get("media",{}).get("tmdb_id",None)
         if tmdb_id:
-            url = f"https://vidsrc-embed.ru/embed/{self.media_type}?tmdb={tmdb_id}"
+            if self.media_type == "movies":
+                vidsrc_media_type = "movie"
+            elif self.media_type == "series":
+                vidsrc_media_type = "tv"
+            url = f"https://vsembed.ru/embed/{vidsrc_media_type}?tmdb={tmdb_id}"
             webbrowser.open(url)
             print(f"Opened: {url}")
 
