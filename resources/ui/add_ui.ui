@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>799</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -131,42 +131,75 @@ QDialog {
 QDialog QLabel {
     color: white;
     border: none;
-}</string>
+}
+
+
+QScrollBar:vertical {
+    border: none;
+    background: transparent;
+    width: 8px;
+    margin: 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: rgba(255, 255, 255, 0.2);
+    min-height: 30px;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+QScrollBar::handle:vertical:pressed {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical,
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: none;
+    height: 0px;
+}
+
+/* Horizontal */
+QScrollBar:horizontal {
+    border: none;
+    background: transparent;
+    height: 8px;
+    margin: 0px;
+}
+
+QScrollBar::handle:horizontal {
+    background: rgba(255, 255, 255, 0.2);
+    min-width: 30px;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+QScrollBar::handle:horizontal:pressed {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+QScrollBar::add-line:horizontal,
+QScrollBar::sub-line:horizontal,
+QScrollBar::add-page:horizontal,
+QScrollBar::sub-page:horizontal {
+    background: none;
+    width: 0px;
+}
+
+QListView{border:none}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
-     <property name="spacing">
-      <number>10</number>
-     </property>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,2,6,0">
-       <item>
-        <widget class="QComboBox" name="source">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <property name="placeholderText">
-          <string>Source</string>
-         </property>
-         <item>
-          <property name="text">
-           <string>DB</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>API</string>
-          </property>
-         </item>
-        </widget>
-       </item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QComboBox" name="search_media_type">
          <property name="placeholderText">
@@ -230,47 +263,7 @@ QDialog QLabel {
       </layout>
      </item>
      <item>
-      <widget class="QScrollArea" name="search_scrollArea">
-       <property name="styleSheet">
-        <string notr="true">border: none</string>
-       </property>
-       <property name="widgetResizable">
-        <bool>true</bool>
-       </property>
-       <widget class="QWidget" name="search_scrollArea_widget">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>580</width>
-          <height>732</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_4">
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="search_verticallayout"/>
-         </item>
-        </layout>
-       </widget>
-      </widget>
+      <widget class="QListView" name="search_listView"/>
      </item>
     </layout>
    </item>

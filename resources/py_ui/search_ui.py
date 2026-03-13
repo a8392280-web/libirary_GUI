@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'add_uicrMIDo.ui'
+## Form generated from reading UI file 'add_uibCmyWt.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.2
 ##
@@ -16,7 +16,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QHBoxLayout,
-    QLineEdit, QPushButton, QScrollArea, QSizePolicy,
+    QLineEdit, QListView, QPushButton, QSizePolicy,
     QVBoxLayout, QWidget)
 from .. import resources_rc
 
@@ -24,7 +24,7 @@ class Ui_add_widget(object):
     def setupUi(self, add_widget):
         if not add_widget.objectName():
             add_widget.setObjectName(u"add_widget")
-        add_widget.resize(600, 799)
+        add_widget.resize(600, 800)
         add_widget.setMinimumSize(QSize(400, 600))
         add_widget.setMaximumSize(QSize(600, 800))
         add_widget.setStyleSheet(u"QLineEdit {\n"
@@ -134,26 +134,77 @@ class Ui_add_widget(object):
 "QDialog QLabel {\n"
 "    color: white;\n"
 "    border: none;\n"
-"}")
+"}\n"
+"\n"
+"\n"
+"QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: transp"
+                        "arent;\n"
+"    width: 8px;\n"
+"    margin: 0px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgba(255, 255, 255, 0.2);\n"
+"    min-height: 30px;\n"
+"    border-radius: 4px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical:hover {\n"
+"    background: rgba(255, 255, 255, 0.3);\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical:pressed {\n"
+"    background: rgba(255, 255, 255, 0.4);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical,\n"
+"QScrollBar::sub-line:vertical,\n"
+"QScrollBar::add-page:vertical,\n"
+"QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"    height: 0px;\n"
+"}\n"
+"\n"
+"/* Horizontal */\n"
+"QScrollBar:horizontal {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    height: 8px;\n"
+"    margin: 0px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"    background: rgba(255, 255, 255, 0.2);\n"
+"    min-width: 30px;\n"
+"    border-radius: 4px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"    background: rgba(255, 255, 255, 0.3);\n"
+"}\n"
+"\n"
+"QScrollBar::handle:h"
+                        "orizontal:pressed {\n"
+"    background: rgba(255, 255, 255, 0.4);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal,\n"
+"QScrollBar::sub-line:horizontal,\n"
+"QScrollBar::add-page:horizontal,\n"
+"QScrollBar::sub-page:horizontal {\n"
+"    background: none;\n"
+"    width: 0px;\n"
+"}\n"
+"\n"
+"QListView{border:none}")
         self.gridLayout = QGridLayout(add_widget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setSpacing(10)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.source = QComboBox(add_widget)
-        self.source.addItem("")
-        self.source.addItem("")
-        self.source.setObjectName(u"source")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.source.sizePolicy().hasHeightForWidth())
-        self.source.setSizePolicy(sizePolicy)
-
-        self.horizontalLayout.addWidget(self.source)
-
         self.search_media_type = QComboBox(add_widget)
         self.search_media_type.addItem("")
         self.search_media_type.addItem("")
@@ -167,11 +218,11 @@ class Ui_add_widget(object):
 
         self.search_line = QLineEdit(add_widget)
         self.search_line.setObjectName(u"search_line")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.search_line.sizePolicy().hasHeightForWidth())
-        self.search_line.setSizePolicy(sizePolicy1)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.search_line.sizePolicy().hasHeightForWidth())
+        self.search_line.setSizePolicy(sizePolicy)
         self.search_line.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.horizontalLayout.addWidget(self.search_line)
@@ -181,32 +232,13 @@ class Ui_add_widget(object):
 
         self.horizontalLayout.addWidget(self.serach_button)
 
-        self.horizontalLayout.setStretch(0, 2)
-        self.horizontalLayout.setStretch(1, 2)
-        self.horizontalLayout.setStretch(2, 6)
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        self.search_scrollArea = QScrollArea(add_widget)
-        self.search_scrollArea.setObjectName(u"search_scrollArea")
-        self.search_scrollArea.setStyleSheet(u"border: none")
-        self.search_scrollArea.setWidgetResizable(True)
-        self.search_scrollArea_widget = QWidget()
-        self.search_scrollArea_widget.setObjectName(u"search_scrollArea_widget")
-        self.search_scrollArea_widget.setGeometry(QRect(0, 0, 580, 732))
-        self.search_scrollArea_widget.setStyleSheet(u"")
-        self.gridLayout_4 = QGridLayout(self.search_scrollArea_widget)
-        self.gridLayout_4.setSpacing(0)
-        self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.search_verticallayout = QVBoxLayout()
-        self.search_verticallayout.setObjectName(u"search_verticallayout")
+        self.search_listView = QListView(add_widget)
+        self.search_listView.setObjectName(u"search_listView")
 
-        self.gridLayout_4.addLayout(self.search_verticallayout, 0, 0, 1, 1)
-
-        self.search_scrollArea.setWidget(self.search_scrollArea_widget)
-
-        self.verticalLayout.addWidget(self.search_scrollArea)
+        self.verticalLayout.addWidget(self.search_listView)
 
 
         self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
@@ -214,18 +246,11 @@ class Ui_add_widget(object):
 
         self.retranslateUi(add_widget)
 
-        self.source.setCurrentIndex(0)
-
-
         QMetaObject.connectSlotsByName(add_widget)
     # setupUi
 
     def retranslateUi(self, add_widget):
         add_widget.setWindowTitle(QCoreApplication.translate("add_widget", u"Form", None))
-        self.source.setItemText(0, QCoreApplication.translate("add_widget", u"DB", None))
-        self.source.setItemText(1, QCoreApplication.translate("add_widget", u"API", None))
-
-        self.source.setPlaceholderText(QCoreApplication.translate("add_widget", u"Source", None))
         self.search_media_type.setItemText(0, QCoreApplication.translate("add_widget", u"Movies", None))
         self.search_media_type.setItemText(1, QCoreApplication.translate("add_widget", u"Series", None))
         self.search_media_type.setItemText(2, QCoreApplication.translate("add_widget", u"Anime", None))

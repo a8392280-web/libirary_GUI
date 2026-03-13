@@ -241,6 +241,8 @@ class MainWidgetPresenter:
     def show_search_dialog(self):
         self.search_dialog = SearchView()
         self.search_presenter = SearchPresenter(self.search_dialog, self.api)
+        self.search_presenter.current_view_mode = self.current_view_mode
+        self.search_dialog.update_view_layout(self.current_view_mode)
         self.search_dialog.exec()
 
 
