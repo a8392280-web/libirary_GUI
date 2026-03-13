@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("APIClient")
 
 class LibraryAPIClient:
-    def __init__(self, base_url="libirarybackend-production.up.railway.app/"):
+    def __init__(self, base_url="libirarybackend-production.up.railway.app"):
         self.base_url = base_url
         # We use AsyncClient for async operations
         self.client = httpx.AsyncClient(
