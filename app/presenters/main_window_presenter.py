@@ -81,19 +81,32 @@ class MainWidgetPresenter:
         self.view.clear_all_data_requested.connect(self.clear_all_data)
 
     @asyncSlot()
+
     async def handle_logout(self):
+        # This blocks the task, but now it's the ONLY task running for this signal
         reply = QMessageBox.question(
             self.view, 'Logout', 'Are you sure you want to logout?',
             QMessageBox.Yes | QMessageBox.No
         )
-        if reply == QMessageBox.Yes:
-            self.view.set_logout_enabled(False)
-            self.view.set_logout_text("Logging out...")
-            try:
-                await self.api.logout()
-            finally:
-                self.view.set_logout_enabled(True)
-                self.view.set_logout_text("Logout")
+        
+        if reply != QMessageBox.Yes:
+            return
+
+        self.view.set_logout_enabled(False)
+        self.view.set_logout_text("Logging out...")
+        
+        try:
+            # Perform the actual API work here
+            await self.api.logout()
+            # SUCCESS: Tell the Controller it's safe to switch windows
+            self.view.logout_completed.emit() 
+        except Exception as e:
+            print(f"Logout failed: {e}")
+            QMessageBox.warning(self.view, "Logout Failed", "Error during logout.")
+            self.view.set_logout_enabled(True)
+            self.view.set_logout_text("Logout")
+
+
 
     def handle_sort_change(self, index: int):
         """Sorts ALL sections and reloads the active one."""
@@ -164,7 +177,10 @@ class MainWidgetPresenter:
             if title: params["title"] = title
 
             response = await self.api.get("users/me/media/", params=params)
-            data = response.get("data", []) if response else []
+            data = response.data if response and response.ok and response.data else {}
+            data = data.get("data")
+
+            print(data)
 
             if len(data) < self.limit:
                 state['has_more'] = False
@@ -227,8 +243,10 @@ class MainWidgetPresenter:
 
         if section == "favorites":
             item = await self.api.get(f"users/me/media/random?media_type={category}&favorite=true")
+            item = item.data if item and item.ok and item.data else None
         else:
             item = await self.api.get(f"users/me/media/random?media_type={category}&status={section}")
+            item = item.data if item and item.ok and item.data else None
 
         if item and "id" in item:
             await DialogHelper.show_detail_dialog(self.api, category, item["id"])

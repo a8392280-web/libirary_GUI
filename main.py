@@ -4,8 +4,8 @@ import asyncio
 from qasync import QEventLoop, asyncSlot
 from updater import check_for_updates
 from app.presenters.main_window_presenter import MainWidgetPresenter
-from app.views.login_view import AuthView
-from app.presenters.login_presenter import AuthPresenter
+from app.views.regester_view import RegesterView
+from app.presenters.regester_presenter import RegesterPresenter
 from app.api.client import LibraryAPIClient
 from app.views.main_window_view import MainWidgetView
 
@@ -13,8 +13,8 @@ from app.views.main_window_view import MainWidgetView
 class AppController:
     def __init__(self):
         self.api = LibraryAPIClient()
-        self.login_view = None
-        self.login_presenter = None
+        self.regester_view = None
+        self.regester_presenter = None
         self.main_window = None
 
     async def start(self):
@@ -28,16 +28,16 @@ class AppController:
 
     def show_login(self):
         """Show the login window"""
-        self.login_view = AuthView()
-        self.login_presenter = AuthPresenter(self.login_view, self.api)
-        self.login_view.login_success.connect(self.show_main)
-        self.login_view.show()
+        self.regester_view = RegesterView()
+        self.regester_presenter = RegesterPresenter(self.regester_view, self.api)
+        self.regester_view.login_success.connect(self.show_main)
+        self.regester_view.show()
 
     def show_main(self):
         """Show the main window"""
         self.main_window_view = MainWidgetView()
         self.main_window_presenter = MainWidgetPresenter(self.main_window_view, self.api)
-        self.main_window_view.logout_requested.connect(self.back_to_login)
+        self.main_window_view.logout_completed.connect(self.back_to_login)
         self.main_window_view.show()
 
         # ✅ Check for updates AFTER the window is visible
@@ -45,24 +45,31 @@ class AppController:
         asyncio.create_task(self._check_updates_async())
 
         # Close the login window if it exists
-        if self.login_view:
-            self.login_view.close()
-            self.login_view = None
-            self.login_presenter = None
+        if self.regester_view:
+            self.regester_view.close()
+            self.regester_view = None
+            self.regester_presenter = None
 
     async def _check_updates_async(self):
         """Runs the blocking update check in a thread so UI stays responsive."""
         await asyncio.to_thread(check_for_updates, self.main_window_view)
 
-    @asyncSlot()
-    async def back_to_login(self):
+
+    def back_to_login(self):
         """Switches from Main to Login"""
-        await self.api.logout()
+        # 1. Open the new window first so the app doesn't accidentally quit
         self.show_login()
 
-        if self.main_window:
-            self.main_window.close()
-            self.main_window = None
+        # 2. Close the old window using the CORRECT variable name
+        if hasattr(self, 'main_window_view') and self.main_window_view:
+            self.main_window_view.close()
+            # Clean up the object to free memory
+            self.main_window_view.deleteLater()
+            self.main_window_view = None
+            
+        # 3. Also clear the presenter to avoid ghost tasks
+        if hasattr(self, 'main_window_presenter'):
+            self.main_window_presenter = None
 
     async def cleanup(self):
         """Clean up async resources before app closes"""

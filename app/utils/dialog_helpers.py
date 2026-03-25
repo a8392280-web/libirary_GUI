@@ -42,20 +42,27 @@ class DialogHelper:
             if item_id:
                 # Note: Fixed the URL structure to match standard REST patterns
                 detail_data = await api.get(f"users/me/media/{media_type}/{item_id}")
+                detail_data = detail_data.data if detail_data and detail_data.ok and detail_data.data else {}
                 print(f"Fetched collection detail for {media_type}: {item_id}")
 
             # 2. If we have an external ID, we are fetching from the global API (TMDB, RAWG, etc.)
             elif tmdb_id:
                 response = await api.post(f"media/{media_type}/from-api?tmdb_id={tmdb_id}")
+                response = response.data if response and response.ok and response.data else {}
                 detail_data = {"user_media": None, "media": response}
             elif mal_id:
                 response = await api.post(f"media/{media_type}/from-api?mal_id={mal_id}")
+                response = response.data if response and response.ok and response.data else {}
                 detail_data = {"user_media": None, "media": response}
             elif rawg_id:
                 response = await api.post(f"media/{media_type}/from-api?rawg_id={rawg_id}")
+                response = response.data if response and response.ok and response.data else {}
+
                 detail_data = {"user_media": None, "media": response}
             elif ol_id:
                 response = await api.post(f"media/{media_type}/from-api?ol_id={ol_id}")
+                response = response.data if response and response.ok and response.data else {}
+
                 detail_data = {"user_media": None, "media": response}
 
             if not detail_data:

@@ -98,9 +98,12 @@ class SearchPresenter(QObject):
 
             endpoint = self._build_endpoint(query, media_type)
             response = await self.api.get(endpoint)
+            data = response.data if response and response.ok and response.data else []
+            print(f"Raw search response: {data}")
 
-            if isinstance(response, list):
-                await self._display_results(response, media_type)
+
+            if isinstance(data, list):
+                await self._display_results(data, media_type)
             else:
                 print(f"No results for '{query}'")
 

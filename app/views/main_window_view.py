@@ -6,6 +6,7 @@ from resources.py_ui.main_ui import Ui_main_widget
 class MainWidgetView(QWidget):
     # Signals
     logout_requested = Signal()
+    logout_completed = Signal()
     add_requested = Signal()
     show_user_media = Signal(str, str, bool)  # category, section, force
     random_media_requested = Signal(str, str)  # category, section
