@@ -10,9 +10,10 @@ from PySide6.QtWidgets import QListWidgetItem, QWidget, QHBoxLayout, QLabel, QMe
 from PySide6.QtGui import QIcon, QFont, QColor, QPixmap
 from PySide6.QtCore import Qt
 from app.utils.movies_fetch import search_arabseed,search_akwam
+from app.services.providers import services
 
 class ShowPresenter:
-    def __init__(self, view, api, media_type, media_data):
+    def __init__(self, view, media_type, media_data, api = services):
         self.view = view
         self.api = api
         self.media_type = media_type
@@ -122,10 +123,7 @@ class ShowPresenter:
         try:
             media_id = self.media_data.get("media", {}).get("id")
 
-            response = await self.api.post(
-                f"users/me/media/save?media_id={media_id}&media_type={self.media_type}", 
-                json=updates
-            )
+            response = await self.api.user_media.save_user_media(self.media_type, media_id, **updates)
 
             print(f"Response: {response}")
             print("Media updated successfully!")

@@ -5,14 +5,14 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QCursor
 from app.views.show_view import ShowView
 from app.presenters.show_presenter import ShowPresenter
-
+from app.services.providers import services
 
 class DialogHelper:
     """Reusable utilities for showing dialogs asynchronously"""
     
     @staticmethod
-    async def show_detail_dialog(api, media_type: str, item_id: int = None, tmdb_id: int = None, 
-                                 mal_id: int = None, rawg_id: int = None, ol_id: str = None):
+    async def show_detail_dialog(media_type: str, item_id: int = None, tmdb_id: int = None, 
+                                 mal_id: int = None, rawg_id: int = None, ol_id: str = None ,api = services):
         """
         Fetches data (DB or API) and opens a detail dialog for any media type.
         """
@@ -41,26 +41,26 @@ class DialogHelper:
             # 1. If we have an item_id, we are fetching from the user's personal collection
             if item_id:
                 # Note: Fixed the URL structure to match standard REST patterns
-                detail_data = await api.get(f"users/me/media/{media_type}/{item_id}")
+                detail_data = await api.user_media.get_media_details(media_type, item_id)
                 detail_data = detail_data.data if detail_data and detail_data.ok and detail_data.data else {}
                 print(f"Fetched collection detail for {media_type}: {item_id}")
 
             # 2. If we have an external ID, we are fetching from the global API (TMDB, RAWG, etc.)
             elif tmdb_id:
-                response = await api.post(f"media/{media_type}/from-api?tmdb_id={tmdb_id}")
+                response = await api.media.add_from_api(media_type,tmdb_id)
                 response = response.data if response and response.ok and response.data else {}
                 detail_data = {"user_media": None, "media": response}
             elif mal_id:
-                response = await api.post(f"media/{media_type}/from-api?mal_id={mal_id}")
+                response = await api.media.add_from_api(media_type,mal_id)
                 response = response.data if response and response.ok and response.data else {}
                 detail_data = {"user_media": None, "media": response}
             elif rawg_id:
-                response = await api.post(f"media/{media_type}/from-api?rawg_id={rawg_id}")
+                response = await api.media.add_from_api(media_type,rawg_id)
                 response = response.data if response and response.ok and response.data else {}
 
                 detail_data = {"user_media": None, "media": response}
             elif ol_id:
-                response = await api.post(f"media/{media_type}/from-api?ol_id={ol_id}")
+                response = await api.media.add_from_api(media_type,ol_id)
                 response = response.data if response and response.ok and response.data else {}
 
                 detail_data = {"user_media": None, "media": response}
@@ -76,7 +76,7 @@ class DialogHelper:
             # Setup View and Presenter
             show_dialog = ShowView()
             # Pass normalized media_type so the presenter knows if it's a 'game', 'movie', etc.
-            show_presenter = ShowPresenter(show_dialog, api, media_type, detail_data)
+            show_presenter = ShowPresenter(view=show_dialog, api=api, media_type=media_type, media_data=detail_data)
             
             # Prevent garbage collection
             show_dialog._presenter = show_presenter

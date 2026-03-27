@@ -1,12 +1,13 @@
 from qasync import asyncSlot
+from app.services.providers import services
 
 
 class RegesterPresenter:
     """Handles all auth business logic — signup, login, verify, resend"""
 
-    def __init__(self, view, api_client):
+    def __init__(self, view, api = services):
         self.view = view
-        self.api = api_client
+        self.api = api
         self._pending_email = None  # holds email between signup and verify steps
 
         self._connect_signals()
@@ -37,7 +38,7 @@ class RegesterPresenter:
 
         self.view.set_signup_loading(True)
         try:
-            result = await self.api.register(
+            result = await self.api.users.register(
                 username=fields["username"],   # API schema: UserCreate.username
                 email=fields["email"],
                 password=fields["password"],
@@ -65,7 +66,7 @@ class RegesterPresenter:
 
         self.view.set_login_loading(True)
         try:
-            result = await self.api.login(
+            result = await self.api.auth.login(
                 email=fields["email"],
                 password=fields["password"],
             )
@@ -90,7 +91,7 @@ class RegesterPresenter:
 
         self.view.set_verify_loading(True)
         try:
-            result = await self.api.verify_email(
+            result = await self.api.users.verify_email(
                 email=self._pending_email,
                 code=code,                     # API schema: VerifyEmail.code (6-digit str)
             )
@@ -113,7 +114,7 @@ class RegesterPresenter:
 
         self.view.set_verify_loading(True)
         try:
-            result = await self.api.resend_verification(email=self._pending_email)
+            result = await self.api.users.resend_verification(email=self._pending_email)
             if result.ok:
                 self.view.show_info("A new code has been sent.")
             else:

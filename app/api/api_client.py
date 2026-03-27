@@ -2,9 +2,8 @@ import asyncio
 import uuid
 import httpx
 import logging
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from ..models.models import ApiResponse
 
 from app.utils.refresh_token_strore import save_refresh_token, get_refresh_token, delete_refresh_token
 from asyncio import Semaphore
@@ -27,16 +26,6 @@ def _get_or_create_device_id() -> str:
     return device_id
 
 
-# ─── Unified Response Wrapper ────────────────────────────────────────────────
-
-@dataclass
-class ApiResponse:
-    ok: bool
-    status_code: int
-    data: Any = None
-    error: str = None
-
-
 # ─── API Client ─────────────────────────────────────────────────────────────
 
 class LibraryAPIClient:
@@ -54,7 +43,7 @@ class LibraryAPIClient:
     async def close(self):
         await self.client.aclose()
 
-    # ─── AUTHENTICATION & USER MANAGEMENT ────────────────────────────────────
+    # ─── STARTUP CHECK ───────────────────────────────────────────────
 
     async def check_startup_session(self) -> bool:
         stored_ref = get_refresh_token()
@@ -63,96 +52,7 @@ class LibraryAPIClient:
             return False
         return await self._refresh_session(stored_ref)
 
-    async def register(self, username: str, email: str, password: str, **extra_data) -> ApiResponse:
-        payload = {"username": username, "email": email, "password": password, **extra_data}
-        try:
-            response = await self.client.post("/users/register", json=payload)
-            if response.status_code == 201:
-                logger.info("Registration successful.")
-                return ApiResponse(ok=True, status_code=201, data=response.json())
-            return ApiResponse(ok=False, status_code=response.status_code, error=response.text)
-        except Exception as e:
-            return ApiResponse(ok=False, status_code=0, error=str(e))
 
-    async def verify_email(self, email: str, code: str) -> ApiResponse:
-        """
-        Verify an e-mail address.
-
-        API schema: VerifyEmail { email: str, code: str (6 digits) }
-        """
-        try:
-            response = await self.client.post(
-                "/users/verify-email",
-                json={"email": email, "code": code},
-            )
-            return ApiResponse(
-                ok=response.is_success,
-                status_code=response.status_code,
-                data=response.json() if response.content else None,
-            )
-        except Exception as e:
-            return ApiResponse(ok=False, status_code=0, error=str(e))
-
-    async def resend_verification(self, email: str) -> ApiResponse:
-        try:
-            response = await self.client.post("/users/resend-verification", json={"email": email})
-            return ApiResponse(
-                ok=response.is_success,
-                status_code=response.status_code,
-                data=response.json() if response.content else None,
-            )
-        except Exception as e:
-            return ApiResponse(ok=False, status_code=0, error=str(e))
-
-    async def login(self, email: str, password: str) -> ApiResponse:
-        """
-        Login via JSON body.
-
-        API schema: LoginRequest { email, password, device_id }
-        The device_id is managed internally and persisted between sessions.
-        """
-        payload = {
-            "email": email,
-            "password": password,
-            "device_id": self._device_id,
-        }
-        try:
-            response = await self.client.post("/auth/login", json=payload)
-            if response.status_code == 200:
-                data = response.json()
-                self.access_token = data["access_token"]
-                save_refresh_token(data["refresh_token"])
-                logger.info("Login successful.")
-                return ApiResponse(ok=True, status_code=200, data=data)
-            return ApiResponse(ok=False, status_code=response.status_code, error=response.text)
-        except Exception as e:
-            return ApiResponse(ok=False, status_code=0, error=str(e))
-
-    async def logout(self) -> ApiResponse:
-        """
-        Logout current device.
-
-        API requires the refresh token in the request body:
-        RefreshRequest { refresh_token: str }
-        """
-        refresh_token = get_refresh_token()
-        resp = await self.post(
-            "/auth/logout",
-            json={"refresh_token": refresh_token} if refresh_token else {},
-        )
-        self.access_token = None
-        delete_refresh_token()
-        if resp.ok:
-            return ApiResponse(ok=True, status_code=resp.status_code)
-        return ApiResponse(ok=True, status_code=0, error="Server logout failed, local session cleared.")
-
-    async def logout_all(self) -> ApiResponse:
-        resp = await self.post("/auth/logout-all")
-        self.access_token = None
-        delete_refresh_token()
-        if resp.ok:
-            return ApiResponse(ok=True, status_code=resp.status_code)
-        return ApiResponse(ok=True, status_code=0, error="Server logout-all failed, local session cleared.")
 
     # ─── PRIVATE TOKEN REFRESH ───────────────────────────────────────────────
 

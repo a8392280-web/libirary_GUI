@@ -5,13 +5,15 @@ from qasync import asyncSlot
 from app.utils.dialog_helpers import DialogHelper
 from app.utils.image_loader import get_image_loader
 
+from app.services.providers import services
+
 class SearchPresenter(QObject):
     DEBOUNCE_MS = 500
 
-    def __init__(self, view, api_client):
+    def __init__(self, view, api = services):
         super().__init__()
         self.view = view
-        self.api = api_client
+        self.api = api
         self.current_view_mode = "grid"
 
         self._current_task = None
@@ -87,17 +89,12 @@ class SearchPresenter(QObject):
             self.view.set_enabled(True)
             self._current_task = None
 
-    def _build_endpoint(self, query: str, media_type: str) -> str:
-        media_type = media_type.lower()
-        return f"media/{media_type}/search/?q={query}"
-
 
     async def _search_async(self, query: str, media_type: str):
         try:
             self.view.clear_results()
 
-            endpoint = self._build_endpoint(query, media_type)
-            response = await self.api.get(endpoint)
+            response = await self.api.media.search_media(media_type, query)
             data = response.data if response and response.ok and response.data else []
             print(f"Raw search response: {data}")
 
@@ -151,7 +148,7 @@ class SearchPresenter(QObject):
             )
 
     async def _show_detail(self, **ids):
-        await DialogHelper.show_detail_dialog(self.api, **ids)
+        await DialogHelper.show_detail_dialog(api=self.api, **ids)
 
     # --------------------------------------------------
     # Cleanup

@@ -6,20 +6,20 @@ from updater import check_for_updates
 from app.presenters.main_window_presenter import MainWidgetPresenter
 from app.views.regester_view import RegesterView
 from app.presenters.regester_presenter import RegesterPresenter
-from app.api.client import LibraryAPIClient
+from app.services.providers import services
 from app.views.main_window_view import MainWidgetView
 
 
 class AppController:
-    def __init__(self):
-        self.api = LibraryAPIClient()
+    def __init__(self, api = services):
+        self.api = api
         self.regester_view = None
         self.regester_presenter = None
         self.main_window = None
 
     async def start(self):
         """Initial check for session"""
-        has_session = await self.api.check_startup_session()
+        has_session = await self.api.api_client.check_startup_session()
 
         if has_session:
             self.show_main()
@@ -73,7 +73,7 @@ class AppController:
 
     async def cleanup(self):
         """Clean up async resources before app closes"""
-        await self.api.close()
+        await self.api.api_client.close()
 
 
 if __name__ == "__main__":

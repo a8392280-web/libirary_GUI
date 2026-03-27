@@ -9,6 +9,7 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from qasync import asyncSlot
 import asyncio
+from app.services.providers import services
 
 class MainWidgetPresenter:
     # ✅ Single source of truth for sections
@@ -21,7 +22,7 @@ class MainWidgetPresenter:
         "favorites":   {"index": 5, "widget_suffix": "6"},
     }
 
-    def __init__(self, view, api):
+    def __init__(self, view, api = services):
         self.view = view
         self.api = api
         self.limit = 30
@@ -97,7 +98,7 @@ class MainWidgetPresenter:
         
         try:
             # Perform the actual API work here
-            await self.api.logout()
+            await self.api.auth.logout()
             # SUCCESS: Tell the Controller it's safe to switch windows
             self.view.logout_completed.emit() 
         except Exception as e:
@@ -171,12 +172,12 @@ class MainWidgetPresenter:
                 "limit": self.limit
             }
 
-            if section == "favorites": params["favorite"] = "true"
+            if section == "favorites": params["favorite"] = True
             else: params["status"] = section
 
             if title: params["title"] = title
 
-            response = await self.api.get("users/me/media/", params=params)
+            response = await self.api.user_media.get_library(**params)
             data = response.data if response and response.ok and response.data else {}
             data = data.get("data")
 
@@ -235,21 +236,21 @@ class MainWidgetPresenter:
     def handle_item_click(self, index):
         item_id = index.data(Qt.UserRole + 4)
         if item_id:
-            asyncio.create_task(DialogHelper.show_detail_dialog(self.api, self.view.current_category, item_id))
+            asyncio.create_task(DialogHelper.show_detail_dialog(api=self.api, media_type=self.view.current_category, item_id=item_id))
 
     @asyncSlot()
     async def handle_random_media_item(self, category, section):
         print(f"Randomly selecting {category}/{section}")
 
         if section == "favorites":
-            item = await self.api.get(f"users/me/media/random?media_type={category}&favorite=true")
+            item = await self.api.user_media.random_pick(media_type=category, favorite=True)
             item = item.data if item and item.ok and item.data else None
         else:
-            item = await self.api.get(f"users/me/media/random?media_type={category}&status={section}")
+            item = await self.api.user_media.random_pick(media_type=category, status=section)
             item = item.data if item and item.ok and item.data else None
 
         if item and "id" in item:
-            await DialogHelper.show_detail_dialog(self.api, category, item["id"])
+            await DialogHelper.show_detail_dialog(api=self.api, media_type=category, item_id=item["id"])
 
     def _ensure_screen_is_full(self, category, section):
         list_name = f'list_view_{self.SECTION_CONFIG[section]["widget_suffix"]}'
