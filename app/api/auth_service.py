@@ -21,7 +21,7 @@ class AuthService:
             "password": password,
             "device_id": self.api._device_id,
         }
-        response = await self.api.post("auth/login", json=payload)
+        response = await self.api.post("auth/login", json=payload, retry_on_401=False)
         if response.ok:
             data = response.data
             if isinstance(data, dict):

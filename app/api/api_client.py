@@ -131,17 +131,17 @@ class LibraryAPIClient:
 
     # ─── CONVENIENCE METHODS ────────────────────────────────────────────────
 
-    async def get(self, endpoint: str, **kwargs) -> ApiResponse:
-        return await self.request("GET", endpoint, **kwargs)
+    async def get(self, endpoint: str, retry_on_401: bool = True, **kwargs) -> ApiResponse:
+        return await self.request("GET", endpoint, retry_on_401=retry_on_401, **kwargs)
 
-    async def post(self, endpoint: str, **kwargs) -> ApiResponse:
-        return await self.request("POST", endpoint, **kwargs)
+    async def post(self, endpoint: str, retry_on_401: bool = True, **kwargs) -> ApiResponse:
+        return await self.request("POST", endpoint, retry_on_401=retry_on_401, **kwargs)
 
-    async def put(self, endpoint: str, **kwargs) -> ApiResponse:
-        return await self.request("PUT", endpoint, **kwargs)
+    async def put(self, endpoint: str, retry_on_401: bool = True, **kwargs) -> ApiResponse:
+        return await self.request("PUT", endpoint, retry_on_401=retry_on_401, **kwargs)
 
-    async def patch(self, endpoint: str, **kwargs) -> ApiResponse:
-        return await self.request("PATCH", endpoint, **kwargs)
+    async def patch(self, endpoint: str, retry_on_401: bool = True, **kwargs) -> ApiResponse:
+        return await self.request("PATCH", endpoint, retry_on_401=retry_on_401, **kwargs)
 
-    async def delete(self, endpoint: str, **kwargs) -> ApiResponse:
-        return await self.request("DELETE", endpoint, **kwargs)
+    async def delete(self, endpoint: str, retry_on_401: bool = True, **kwargs) -> ApiResponse:
+        return await self.request("DELETE", endpoint, retry_on_401=retry_on_401, **kwargs)
