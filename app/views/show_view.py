@@ -5,6 +5,8 @@ from resources.py_ui.show_ui import Ui_show
 from app.utils.image_loader import get_image_loader
 import webbrowser
 from .user_rating_view import UserRatingView
+import re
+from typing import Optional
 
 class ShowView(QDialog):
     """Pure UI component for show dialog"""
@@ -42,7 +44,7 @@ class ShowView(QDialog):
     
 
     def _on_rating_widget_clicked(self):
-        current_rating = float(self.ui.user_rating.text()) if self.ui.user_rating.text() in  ["User rate", None] else 0.0
+        current_rating = self._get_current_rating_value()
         rating_dialog = UserRatingView(current_rating, self)
         rating_dialog.rating_changed.connect(self._on_rating_updated)
         rating_dialog.exec()
@@ -50,10 +52,55 @@ class ShowView(QDialog):
     def _on_rating_updated(self, new_rating):
         """Handle the new rating"""
         print(f"New rating: {new_rating}")
-        self.ui.user_rating.setText(f"{float(new_rating)}")
+        self._set_user_rating_text(new_rating)
 
         # Save to database/emit to presenter
         self.user_rating_changed.emit(float(new_rating))
+
+    def _parse_rating_text(self, text) -> Optional[float]:
+        if text is None:
+            return None
+        if isinstance(text, (int, float)):
+            return float(text)
+
+        value = str(text).strip()
+        if not value:
+            return None
+
+        if value.lower() in {"user rate", "rate", "rating"}:
+            return None
+
+        value = value.replace(",", ".")
+        match = re.search(r"(\d+(?:\.\d+)?)", value)
+        if not match:
+            return None
+
+        try:
+            rating = float(match.group(1))
+        except ValueError:
+            return None
+
+        if rating < 0:
+            rating = 0.0
+        if rating > 10:
+            rating = 10.0
+        return rating
+
+    def _get_current_rating_value(self) -> int:
+        rating = self._parse_rating_text(self.ui.user_rating.text())
+        if rating is None:
+            return 0
+        return int(round(rating))
+
+    def _set_user_rating_text(self, rating) -> None:
+        parsed = self._parse_rating_text(rating)
+        if parsed is None:
+            self.ui.user_rating.setText("User rate")
+            return
+        if float(parsed).is_integer():
+            self.ui.user_rating.setText(str(int(parsed)))
+        else:
+            self.ui.user_rating.setText(f"{parsed:.1f}")
 
     def on_favorite_toggled(self, checked):
         print(f"Favorite toggled: {checked}")
@@ -103,7 +150,7 @@ class ShowView(QDialog):
             self.id = media_details.get("id", None)
 
         if user_media_details:
-            self.ui.user_rating.setText(str(user_media_details.get("user_rating", "")))
+            self._set_user_rating_text(user_media_details.get("user_rating", None))
 
             self.set_favorite_button(user_media_details.get("favorite", False))
             self.set_current_category(user_media_details.get("status", ""))
