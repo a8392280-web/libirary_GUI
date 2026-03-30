@@ -4,6 +4,7 @@ from app.views.media_delegate import MediaDelegate
 from app.views.search_view import SearchView
 from app.presenters.search_presenter import SearchPresenter
 from app.utils.dialog_helpers import DialogHelper
+from app.utils.app_settings import AppSettings
 from PySide6.QtWidgets import QMessageBox, QListView
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QStandardItemModel, QStandardItem
@@ -21,6 +22,12 @@ class MainWidgetPresenter:
         "completed":   {"index": 4, "widget_suffix": "5"},
         "favorites":   {"index": 5, "widget_suffix": "6"},
     }
+    SORT_MAP = {
+        0: ("title", "asc"),
+        1: ("title", "desc"),
+        2: ("released", "asc"),
+        3: ("released", "desc"),
+    }
 
     def __init__(self, view, api = services):
         self.view = view
@@ -29,6 +36,7 @@ class MainWidgetPresenter:
         self.current_view_mode = "grid"
         self.sort_by = "title"
         self.order = "asc"
+        self.settings = AppSettings()
 
         # ✅ Generate mappings dynamically
         self.list_to_section = {
@@ -60,6 +68,7 @@ class MainWidgetPresenter:
         self.search_timers = {}
 
         self._connect_signals()
+        self._load_settings()
 
     def _connect_signals(self):
         """Connects signals from the View"""
@@ -80,6 +89,22 @@ class MainWidgetPresenter:
 
         # Clear all data
         self.view.clear_all_data_requested.connect(self.clear_all_data)
+
+    def _load_settings(self):
+        saved_view_mode = self.settings.get_view_mode()
+        if saved_view_mode in ("grid", "list"):
+            self.current_view_mode = saved_view_mode
+            for section, cfg in self.SECTION_CONFIG.items():
+                view = getattr(self.view.ui, f'list_view_{cfg["widget_suffix"]}')
+                self.view.update_view_layout(view, self.current_view_mode)
+
+        saved_sort_index = self.settings.get_sort_index()
+        if saved_sort_index not in self.SORT_MAP:
+            saved_sort_index = 0
+        self.sort_by, self.order = self.SORT_MAP.get(saved_sort_index, ("title", "asc"))
+        self.view.ui.sort_button.blockSignals(True)
+        self.view.ui.sort_button.setCurrentIndex(saved_sort_index)
+        self.view.ui.sort_button.blockSignals(False)
 
     @asyncSlot()
 
@@ -111,13 +136,8 @@ class MainWidgetPresenter:
 
     def handle_sort_change(self, index: int):
         """Sorts ALL sections and reloads the active one."""
-        sort_map = {
-            0: ("title", "asc"),
-            1: ("title", "desc"),
-            2: ("released", "asc"),
-            3: ("released", "desc")
-        }
-        self.sort_by, self.order = sort_map.get(index, ("title", "asc"))
+        self.sort_by, self.order = self.SORT_MAP.get(index, ("title", "asc"))
+        self.settings.set_sort_index(index)
 
         # Reset all models/states
         for section in self.SECTION_CONFIG.keys():
@@ -136,6 +156,7 @@ class MainWidgetPresenter:
 
     def toggle_all_view_modes(self):
         self.current_view_mode = "list" if self.current_view_mode == "grid" else "grid"
+        self.settings.set_view_mode(self.current_view_mode)
         for section, cfg in self.SECTION_CONFIG.items():
             view = getattr(self.view.ui, f'list_view_{cfg["widget_suffix"]}')
             self.view.update_view_layout(view, self.current_view_mode)
