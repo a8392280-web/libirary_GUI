@@ -94,13 +94,19 @@ class MainWidgetPresenter:
         # Clear all data
         self.view.clear_all_data_requested.connect(self.clear_all_data)
 
+    def _apply_view_mode(self):
+        for section, cfg in self.SECTION_CONFIG.items():
+            view = getattr(self.view.ui, f'list_view_{cfg["widget_suffix"]}')
+            self.view.update_view_layout(view, self.current_view_mode)
+        self.view.ui.view_button.blockSignals(True)
+        self.view.ui.view_button.setChecked(self.current_view_mode == "grid")
+        self.view.ui.view_button.blockSignals(False)
+
     def _load_settings(self):
         saved_view_mode = self.settings.get_view_mode()
         if saved_view_mode in ("grid", "list"):
             self.current_view_mode = saved_view_mode
-            for section, cfg in self.SECTION_CONFIG.items():
-                view = getattr(self.view.ui, f'list_view_{cfg["widget_suffix"]}')
-                self.view.update_view_layout(view, self.current_view_mode)
+            self._apply_view_mode()
 
         saved_sort_index = self.settings.get_sort_index()
         if saved_sort_index not in self.SORT_MAP:
@@ -161,9 +167,7 @@ class MainWidgetPresenter:
     def toggle_all_view_modes(self):
         self.current_view_mode = "list" if self.current_view_mode == "grid" else "grid"
         self.settings.set_view_mode(self.current_view_mode)
-        for section, cfg in self.SECTION_CONFIG.items():
-            view = getattr(self.view.ui, f'list_view_{cfg["widget_suffix"]}')
-            self.view.update_view_layout(view, self.current_view_mode)
+        self._apply_view_mode()
 
     def handle_show_user_media(self, category: str, section: str, force: bool = False, title: str = None):
         if not force:
