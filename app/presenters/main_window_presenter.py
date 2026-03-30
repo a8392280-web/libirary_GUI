@@ -5,7 +5,7 @@ from app.views.search_view import SearchView
 from app.presenters.search_presenter import SearchPresenter
 from app.utils.dialog_helpers import DialogHelper
 from app.utils.app_settings import AppSettings
-from PySide6.QtWidgets import QMessageBox, QListView
+from PySide6.QtWidgets import QMessageBox
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from qasync import asyncSlot

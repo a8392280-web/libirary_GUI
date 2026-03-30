@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_uiPXngSg.ui'
+## Form generated from reading UI file 'main_uifjTYgh.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.2
 ##
@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
     QHBoxLayout, QLabel, QLineEdit, QListView,
     QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
     QTabWidget, QVBoxLayout, QWidget)
+
 from .. import resources_rc
 
 class Ui_main_widget(object):
@@ -1079,6 +1080,7 @@ class Ui_main_widget(object):
         self.search_button_3.toggled.connect(self.search_line_3.setVisible)
         self.search_button_4.toggled.connect(self.search_line_4.setVisible)
         self.side_bar_button.toggled.connect(self.side_widget.setHidden)
+        self.search_button_6.toggled.connect(self.search_line_6.setVisible)
 
         self.stacked_body_Widget.setCurrentIndex(0)
         self.tap_widget.setCurrentIndex(0)

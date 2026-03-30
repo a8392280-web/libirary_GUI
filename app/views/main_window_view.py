@@ -1,6 +1,6 @@
 # views/main_widget_view.py
-from PySide6.QtCore import Signal, Qt
-from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QListView
+from PySide6.QtCore import Signal
+from PySide6.QtWidgets import QWidget, QListView
 from resources.py_ui.main_ui import Ui_main_widget
 from app.utils.loading_spinner import SpinnerOverlay
 

@@ -2,13 +2,8 @@ import asyncio
 import webbrowser
 from PySide6.QtCore import QTimer
 from qasync import asyncSlot
-import httpx
-from PySide6.QtWidgets import QListWidgetItem
-from PySide6.QtGui import QIcon, QFont, QColor
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QListWidgetItem, QWidget, QHBoxLayout, QLabel, QMessageBox
-from PySide6.QtGui import QIcon, QFont, QColor, QPixmap
-from PySide6.QtCore import Qt
+from PySide6.QtWidgets import  QMessageBox
+
 from app.utils.movies_fetch import search_arabseed,search_akwam
 from app.services.providers import services
 

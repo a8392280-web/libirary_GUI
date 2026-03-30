@@ -2124,11 +2124,11 @@ QTabBar::tab:hover {
    <hints>
     <hint type="sourcelabel">
      <x>232</x>
-     <y>169</y>
+     <y>157</y>
     </hint>
     <hint type="destinationlabel">
-     <x>437</x>
-     <y>163</y>
+     <x>280</x>
+     <y>146</y>
     </hint>
    </hints>
   </connection>
@@ -2156,11 +2156,11 @@ QTabBar::tab:hover {
    <hints>
     <hint type="sourcelabel">
      <x>232</x>
-     <y>169</y>
+     <y>157</y>
     </hint>
     <hint type="destinationlabel">
-     <x>437</x>
-     <y>163</y>
+     <x>280</x>
+     <y>146</y>
     </hint>
    </hints>
   </connection>
@@ -2172,11 +2172,11 @@ QTabBar::tab:hover {
    <hints>
     <hint type="sourcelabel">
      <x>232</x>
-     <y>169</y>
+     <y>157</y>
     </hint>
     <hint type="destinationlabel">
-     <x>437</x>
-     <y>163</y>
+     <x>280</x>
+     <y>146</y>
     </hint>
    </hints>
   </connection>
@@ -2188,11 +2188,11 @@ QTabBar::tab:hover {
    <hints>
     <hint type="sourcelabel">
      <x>232</x>
-     <y>169</y>
+     <y>157</y>
     </hint>
     <hint type="destinationlabel">
-     <x>437</x>
-     <y>163</y>
+     <x>280</x>
+     <y>146</y>
     </hint>
    </hints>
   </connection>
@@ -2209,6 +2209,22 @@ QTabBar::tab:hover {
     <hint type="destinationlabel">
      <x>171</x>
      <y>131</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>search_button_6</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>search_line_6</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>264</x>
+     <y>151</y>
     </hint>
    </hints>
   </connection>
