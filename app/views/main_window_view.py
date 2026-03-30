@@ -27,6 +27,16 @@ class MainWidgetView(QWidget):
         # ✅ State Tracking
         self.current_category = "movies"  # Default starting category
         self.threshold = 100  # Pixels from bottom to trigger pagination
+
+        # Sidebar category buttons mapping
+        self.category_buttons = {
+            "movies": self.ui.show_movies,
+            "series": self.ui.show_series,
+            "games": self.ui.show_games,
+            "books": self.ui.show_books,
+            "manga": self.ui.show_comics,
+            "anime": self.ui.show_anime,
+        }
         
         # ✅ Dynamic Search Bar Mapping (Mapping UI elements to backend keys)
         self.search_lines = {
@@ -67,8 +77,8 @@ class MainWidgetView(QWidget):
         self.ui.show_anime.clicked.connect(lambda: self.set_active_category("anime"))
 
         # 2. Sidebar Navigation - General
-        self.ui.show_home.clicked.connect(self.show_home_requested.emit)
-        self.ui.show_setting.clicked.connect(self.show_setting_requested.emit)
+        self.ui.show_home.clicked.connect(self._on_home_clicked)
+        self.ui.show_setting.clicked.connect(self._on_setting_clicked)
         self.ui.logout.clicked.connect(self.logout_requested.emit)
         
 
@@ -113,9 +123,44 @@ class MainWidgetView(QWidget):
 
     # --- Logic Methods ---
 
+    def _enable_all_category_buttons(self):
+        for btn in self.category_buttons.values():
+            btn.setEnabled(True)
+
+    def _clear_category_checks(self):
+        for btn in self.category_buttons.values():
+            if btn.isChecked():
+                btn.blockSignals(True)
+                btn.setChecked(False)
+                btn.blockSignals(False)
+
+    def _set_active_category_button(self, category: str):
+        if category not in self.category_buttons:
+            return
+        for cat, btn in self.category_buttons.items():
+            is_active = (cat == category)
+            btn.blockSignals(True)
+            btn.setChecked(is_active)
+            btn.blockSignals(False)
+            btn.setEnabled(not is_active)
+
+    def _on_home_clicked(self):
+        self._enable_all_category_buttons()
+        self._clear_category_checks()
+        self.show_home_requested.emit()
+
+    def _on_setting_clicked(self):
+        self._enable_all_category_buttons()
+        self._clear_category_checks()
+        self.show_setting_requested.emit()
+
     def set_active_category(self, category: str):
         """Changes the current category context and triggers a data reload."""
+        if category == self.current_category and self.ui.stacked_body_Widget.currentIndex() == 1:
+            return
+
         self.current_category = category
+        self._set_active_category_button(category)
         
         # Update the UI Label to match (Movies, Series, etc.)
         self.ui.title_label.setText(category.capitalize())
