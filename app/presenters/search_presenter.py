@@ -75,6 +75,7 @@ class SearchPresenter(QObject):
         media_type = media_type.lower()
 
         self.cancel_current_search()
+        self.view.set_loading(True)
         self.view.set_enabled(False)
 
         self._current_task = asyncio.create_task(
@@ -86,6 +87,7 @@ class SearchPresenter(QObject):
         except asyncio.CancelledError:
             pass
         finally:
+            self.view.set_loading(False)
             self.view.set_enabled(True)
             self._current_task = None
 

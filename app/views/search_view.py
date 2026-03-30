@@ -3,6 +3,7 @@ from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from resources.py_ui.search_ui import Ui_add_widget
 from app.views.media_delegate import MediaDelegate
+from app.utils.loading_spinner import SpinnerOverlay
 
 
 class SearchView(QDialog):
@@ -23,6 +24,9 @@ class SearchView(QDialog):
         self.results_model = QStandardItemModel()
         self.ui.search_listView.setModel(self.results_model)
         self.ui.search_listView.setItemDelegate(MediaDelegate())
+
+        # Spinner overlay for loading state
+        self._spinner = SpinnerOverlay(self.ui.search_listView)
         
         # Set media type to index -1 (placeholder showing)
         self.ui.search_media_type.setCurrentIndex(-1)
@@ -99,6 +103,13 @@ class SearchView(QDialog):
         self.ui.search_line.setEnabled(enabled)
         self.ui.serach_button.setEnabled(enabled)
         self.ui.search_media_type.setEnabled(enabled)
+
+    def set_loading(self, loading: bool):
+        """Show/hide loading spinner over results"""
+        if loading:
+            self._spinner.start()
+        else:
+            self._spinner.stop()
     
     def update_view_layout(self, mode: str):
         """Update search results between grid and list modes"""

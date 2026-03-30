@@ -154,6 +154,8 @@ class MainWidgetPresenter:
 
         try:
             state['is_loading'] = True
+            if not append:
+                self.view.set_section_loading(section, True)
             model = self.models[section]
 
             if section not in self._views_setup:
@@ -203,6 +205,8 @@ class MainWidgetPresenter:
         
         finally:
             state['is_loading'] = False
+            if not append:
+                self.view.set_section_loading(section, False)
             if state['has_more']:
                 QTimer.singleShot(300, lambda: self._ensure_screen_is_full(category, section))
 

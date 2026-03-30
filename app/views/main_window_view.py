@@ -2,6 +2,7 @@
 from PySide6.QtCore import Signal, Qt
 from PySide6.QtWidgets import QWidget, QLabel, QMessageBox, QListView
 from resources.py_ui.main_ui import Ui_main_widget
+from app.utils.loading_spinner import SpinnerOverlay
 
 class MainWidgetView(QWidget):
     # Signals
@@ -36,6 +37,20 @@ class MainWidgetView(QWidget):
             "books": self.ui.show_books,
             "manga": self.ui.show_comics,
             "anime": self.ui.show_anime,
+        }
+
+        # Section list views and loading spinners
+        self.section_list_views = {
+            "in_progress": self.ui.list_view_1,
+            "planned": self.ui.list_view_2,
+            "on_hold": self.ui.list_view_3,
+            "dropped": self.ui.list_view_4,
+            "completed": self.ui.list_view_5,
+            "favorites": self.ui.list_view_6,
+        }
+        self.section_spinners = {
+            section: SpinnerOverlay(list_view)
+            for section, list_view in self.section_list_views.items()
         }
         
         # ✅ Dynamic Search Bar Mapping (Mapping UI elements to backend keys)
@@ -126,6 +141,15 @@ class MainWidgetView(QWidget):
     def _enable_all_category_buttons(self):
         for btn in self.category_buttons.values():
             btn.setEnabled(True)
+
+    def set_section_loading(self, section: str, loading: bool):
+        overlay = self.section_spinners.get(section)
+        if not overlay:
+            return
+        if loading:
+            overlay.start()
+        else:
+            overlay.stop()
 
     def _clear_category_checks(self):
         for btn in self.category_buttons.values():
