@@ -27,6 +27,10 @@ class MainWidgetPresenter:
         1: ("title", "desc"),
         2: ("released", "asc"),
         3: ("released", "desc"),
+        4: ("created_at", "asc"),
+        5: ("created_at", "desc"),
+        6: ("user_rating", "asc"),
+        7: ("user_rating", "desc"),
     }
 
     def __init__(self, view, api = services):

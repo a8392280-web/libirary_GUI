@@ -77,7 +77,11 @@ class MainWidgetView(QWidget):
             "Title (A-Z)",
             "Title (Z-A)",
             "Released (Oldest)",
-            "Released (Newest)"
+            "Released (Newest)",
+            "Created (Oldest)",
+            "Created (Newest)",
+            "User Rating (Lowest)",
+            "User Rating (Highest)"
         ])
 
     def _setup_connections(self):
