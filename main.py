@@ -2,7 +2,7 @@ import sys
 from PySide6 import QtWidgets
 import asyncio
 from qasync import QEventLoop, asyncSlot
-from updater import check_for_updates
+from updater import fetch_latest_release, show_update_dialog
 from app.presenters.main_window_presenter import MainWidgetPresenter
 from app.views.regester_view import RegesterView
 from app.presenters.regester_presenter import RegesterPresenter
@@ -40,8 +40,8 @@ class AppController:
         self.main_window_view.logout_completed.connect(self.back_to_login)
         self.main_window_view.show()
 
-        # ✅ Check for updates AFTER the window is visible
-        # Runs in a background thread so it never blocks the UI
+        # Check for updates AFTER the window is visible
+        # Fetch runs in a background thread so it never blocks the UI
         asyncio.create_task(self._check_updates_async())
 
         # Close the login window if it exists
@@ -51,8 +51,17 @@ class AppController:
             self.regester_presenter = None
 
     async def _check_updates_async(self):
-        """Runs the blocking update check in a thread so UI stays responsive."""
-        await asyncio.to_thread(check_for_updates, self.main_window_view)
+        """Runs the blocking network check in a thread; shows UI prompt on main thread."""
+        info = await asyncio.to_thread(fetch_latest_release)
+        if not info:
+            return
+
+        # If the window was closed while we were fetching, skip the dialog.
+        if not hasattr(self, "main_window_view") or self.main_window_view is None:
+            return
+
+        latest_version, download_url = info
+        show_update_dialog(self.main_window_view, latest_version, download_url)
 
 
     def back_to_login(self):
