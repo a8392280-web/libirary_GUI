@@ -12,6 +12,7 @@ A modern, feature-rich **PySide6 desktop client** for managing your personal med
 ## Table of Contents
 
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Quick Start](#quick-start)
 - [Tech Stack](#tech-stack)
 - [Architecture](#architecture)
@@ -46,6 +47,33 @@ A modern, feature-rich **PySide6 desktop client** for managing your personal med
 - 🔄 **Auto-Updates**: Built-in update checker with GitHub Release integration
 - 💾 **Persistent Settings**: UI preferences saved and restored automatically
 - ⚡ **Responsive UI**: Async operations ensure the interface never freezes
+
+## Screenshots
+
+Get a glimpse of the application interface:
+
+### Main Library View
+Browse your media collection with beautiful grid or list layouts. Navigate between categories (Movies, Series, Games, Books, Manga, Anime) and organize by status sections.
+
+| Movies View | Games View |
+|------------|-----------|
+| ![Movies Library](docs\screenshots\movies_preview.PNG) | ![Games Library](docs\screenshots\games_preview.PNG) |
+
+### Search & Discovery
+Easily find content with debounced search. Results update in real-time as you type, making it quick to locate exactly what you're looking for.
+
+Search Dialog & Search Results 
+
+![Search Feature](docs\screenshots\add_preview.PNG)
+
+### Media Details & Information
+View comprehensive information about each media item including cast, ratings, genres, and year. Rate items, mark as favorites, and access external streaming links.
+
+Detail View
+
+![Media Details](docs\screenshots\show_preview.PNG)
+
+
 
 ## Quick Start
 
