@@ -4,15 +4,16 @@ import httpx
 import logging
 from pathlib import Path
 from ..models.models import ApiResponse
+from ..config import API_BASE_URL, API_TIMEOUT, API_MAX_CONNECTIONS, DEVICE_ID_FILE, KEYRING_SERVICE_NAME, LOG_LEVEL
 
 from app.utils.refresh_token_strore import save_refresh_token, get_refresh_token, delete_refresh_token
 from asyncio import Semaphore
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=getattr(logging, LOG_LEVEL))
 logger = logging.getLogger("APIClient")
 
 # Persists a stable device ID alongside the refresh-token store
-_DEVICE_ID_FILE = Path.home() / ".library_app_device_id"
+_DEVICE_ID_FILE = DEVICE_ID_FILE
 
 
 def _get_or_create_device_id() -> str:
@@ -29,12 +30,14 @@ def _get_or_create_device_id() -> str:
 # ─── API Client ─────────────────────────────────────────────────────────────
 
 class LibraryAPIClient:
-    def __init__(self, base_url: str = "https://libirarybackend-production.up.railway.app/v1/"):
+    def __init__(self, base_url: str = None):
+        if base_url is None:
+            base_url = API_BASE_URL
         self.base_url = base_url
         self.client = httpx.AsyncClient(
             base_url=self.base_url,
-            timeout=httpx.Timeout(10.0),
-            limits=httpx.Limits(max_keepalive_connections=20, keepalive_expiry=30.0)
+            timeout=httpx.Timeout(float(API_TIMEOUT)),
+            limits=httpx.Limits(max_keepalive_connections=API_MAX_CONNECTIONS, keepalive_expiry=30.0)
         )
         self.access_token: str | None = None
         self._request_semaphore = Semaphore(10)

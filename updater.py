@@ -2,12 +2,8 @@ import webbrowser
 import requests
 from packaging import version
 from PySide6.QtWidgets import QMessageBox
-
 from version import __version__
-
-# Replace these with your actual GitHub username and repo name
-GITHUB_USER = "a8392280-web"
-GITHUB_REPO = "libirary_GUI"
+from app.config import GITHUB_USER, GITHUB_REPO
 
 
 def fetch_latest_release():
